@@ -20,18 +20,18 @@ This is a basic authentication project (Login + Registration) built with NestJS 
 
 ```bash
 src/
-├── app/                    # Use Cases (Application Layer)
+├── app/                   
 │   └── auth/
 │       └── use-cases/
 │       └── dto/
-├── domain/                 # Business Logic (Domain Layer)
+├── domain/                 
 │   └── auth/
 │       └── entities/
-│       └── interfaces/     # Domain contracts
-├── infrastructure/         # Adapters (Infrastructure Layer)
+│       └── interfaces/     
+├── infrastructure/         
 │   └── controllers/
 │   └── services/
 │   └── repositories/
 │   └── jwt/
-├── shared/                 # Utilities, exceptions, constants (Shared layer)
-├── main.ts                 # Entry point
+├── shared/                 
+├── main.ts                
