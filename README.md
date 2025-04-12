@@ -12,15 +12,26 @@ This is a basic authentication project (Login + Registration) built with NestJS 
 - Clear separation between infrastructure, application, and domain
 - Simple unit testing included
 - Docker and environment variables setup
-- Security best practices (bcrypt, headers, etc.)
+- Security best practices (bcrypt, headers, xss, sql, etc.)
 
 ---
 
 ## Project Structure
 
 ```bash
+.
+├── .docker
+│   └── Dockerfile
+├── .env
+├── .env.example
+├── eslint.config.mjs
+├── .git
+├── .gitignore
+├── LICENSE
+├── nest-cli.json
 ├── package.json
 ├── package-lock.json
+├── .prettierrc
 ├── README.md
 ├── src
 │   ├── app.module.ts
@@ -128,5 +139,6 @@ This is a basic authentication project (Login + Registration) built with NestJS 
 │       └── infrastructure
 ├── tsconfig.build.json
 └── tsconfig.json
+
 
 ```
