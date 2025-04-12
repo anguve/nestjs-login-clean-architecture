@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "typeRoots": ["node_modules/@types", "src/types"],
+    "esModuleInterop": true,
+    "types": ["node"],
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "@common/*": ["src/common/*"],
+      "@core/*": ["src/core/*"],
+      "@security/*": ["src/common/security/*"],
+      "@auth/*": ["src/modules/auth/*"]
+    },
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": false,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true
+  }
+}
