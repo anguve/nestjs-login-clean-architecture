@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { RegisterUsersService } from './register-users.service';
-import { RegisterUsersController } from './register-users.controller';
+import { RegisterUsersController } from '@user-registration/infrastructure/controllers/RegisterUsersController';
+import { RegisterUsersDomainService } from '@user-registration/domain/services/RegisterUsersDomainService';
+import { RegisterUserUseCase } from '@user-registration/application/use-cases/RegisterUserUseCase';
 
 @Module({
   controllers: [RegisterUsersController],
-  providers: [RegisterUsersService],
+  providers: [RegisterUsersDomainService, RegisterUserUseCase]
 })
-export class RegisterUsersModule {}
+export class UserRegistrationModule {}
