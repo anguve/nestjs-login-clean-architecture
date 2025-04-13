@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { validatedEnvVars } from '@common/shared/infrastructure/config/envs';
-import { GlobalExceptionFilter } from '@common/filters/global-exception.filter';
+import { GlobalExceptionFilter } from '@common/filters/GlobalExceptionFilter';
 
 const DEFAULT_SERVER_PORT = 3000;
 const DEFAULT_SERVER_HOST = '0.0.0.0';

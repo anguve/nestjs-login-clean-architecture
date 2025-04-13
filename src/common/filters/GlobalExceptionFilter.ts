@@ -33,9 +33,6 @@ export class GlobalExceptionFilter implements ExceptionFilter {
           : res
       );
     } else {
-      // Excepción desconocida (error de programación, etc.)
-      console.error('Unhandled Exception:', exception);
-
       response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
         message: 'Internal server error',
