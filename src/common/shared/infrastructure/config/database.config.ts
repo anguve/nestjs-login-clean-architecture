@@ -3,6 +3,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join } from 'path';
 
 import { validatedEnvVars } from '@common/shared/infrastructure/config/envs';
+import { UserModel } from '@auth/infrastructure/database/models/UserModel';
 
 export default registerAs('database', () => ({
   type: 'postgres',
@@ -11,8 +12,9 @@ export default registerAs('database', () => ({
   username: validatedEnvVars.DB_USER,
   password: validatedEnvVars.DB_PASSWORD,
   database: validatedEnvVars.DB_NAME,
-  entities: [],
-  synchronize: false,
+  schema: validatedEnvVars.DB_SCHEMA,
+  entities: [UserModel],
+  synchronize: true,
   logging: validatedEnvVars.NODE_ENV === 'development',
   migrations: [join(__dirname, '../database/migrations/*{.ts,.js}')],
   cli: {

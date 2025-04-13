@@ -14,7 +14,10 @@ const environmentVariablesSchema = object({
   DB_USER: string().required(),
   DB_PASSWORD: string().required(),
   DB_NAME: string().required(),
-  DB_SCHEMA: string().default('public')
+  DB_SCHEMA: string().default('public'),
+
+  JWT_SECRET: string().required().default('default'),
+  JWT_EXPIRES_IN: string().required().default('1h')
 }).noUnknown();
 
 export const validatedEnvVars = environmentVariablesSchema.validateSync(

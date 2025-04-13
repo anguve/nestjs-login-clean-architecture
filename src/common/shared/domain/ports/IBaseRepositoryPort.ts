@@ -1,6 +1,5 @@
-export interface BaseRepositoryPort<T> {
+export interface IBaseRepositoryPort<T> {
   findAll(): Promise<T[]>;
-  findOneById(id: number | string): Promise<T | null>;
   findOne(where: Partial<T>): Promise<T | null>;
   create(data: Partial<T>): Promise<T>;
   update(id: number | string, data: Partial<T>): Promise<T>;
