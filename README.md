@@ -19,16 +19,6 @@ This is a basic authentication project (Login + Registration) built with NestJS 
 ## Project Structure
 
 ```bash
-.
-├── .docker
-│   └── Dockerfile
-├── .env
-├── .env.example
-├── eslint.config.mjs
-├── .git
-├── .gitignore
-├── LICENSE
-├── nest-cli.json
 ├── package.json
 ├── package-lock.json
 ├── .prettierrc
@@ -36,37 +26,61 @@ This is a basic authentication project (Login + Registration) built with NestJS 
 ├── src
 │   ├── app.module.ts
 │   ├── common
-│   │   ├── core
+│   │   ├── filters
+│   │   │   └── GlobalExceptionFilter.ts
 │   │   └── shared
+│   │       ├── constants
+│   │       │   ├── security-injection-detector-messages.ts
+│   │       │   └── security-injection-detector.ts
 │   │       ├── domain
+│   │       │   ├── errors
+│   │       │   │   ├── BadRequestDomainException.ts
+│   │       │   │   ├── BaseDomainException.ts
+│   │       │   │   ├── ConflictDomainException.ts
+│   │       │   │   ├── NotFoundDomainException.ts
+│   │       │   │   └── UnauthorizedDomainException.ts
+│   │       │   ├── ports
+│   │       │   │   ├── IBaseRepositoryPort.ts
+│   │       │   │   ├── IJwtServicePort.ts
+│   │       │   │   └── IPasswordHasherPort.ts
+│   │       │   ├── repositories
 │   │       │   └── value-objects
-│   │       │       ├── VOArray.ts
-│   │       │       ├── VOBoolean.ts
-│   │       │       ├── VONumber.ts
-│   │       │       ├── VOObject.ts
+│   │       │       ├── BaseValueObject.ts
+│   │       │       ├── VOBaseArray.ts
+│   │       │       ├── VOBaseBoolean.ts
+│   │       │       ├── VOBaseEmail.ts
+│   │       │       ├── VOBaseNumber.ts
+│   │       │       ├── VOBaseObject.ts
 │   │       │       └── VOString.ts
-│   │       ├── errors
-│   │       │   └── BaseError.ts
+│   │       ├── dto
+│   │       │   └── base-response.dto.ts
 │   │       ├── exceptions
-│   │       │   ├── BadRequestException.ts
-│   │       │   ├── ConflictException.ts
-│   │       │   ├── NotFoundException.ts
-│   │       │   └── UnauthorizedException.ts
-│   │       └── infrastructure
-│   │           ├── config
-│   │           │   ├── database.config.ts
-│   │           │   ├── jwt.config.ts
-│   │           │   └── server.config.ts
-│   │           ├── logging
-│   │           │   ├── logger.config.ts
-│   │           │   ├── logger.service.ts
-│   │           │   └── logger.ts
-│   │           ├── middlewares
-│   │           │   ├── auth.middleware.ts
-│   │           │   └── permissions.middleware.ts
-│   │           └── security
-│   │               ├── encryption.service.ts
-│   │               └── password-hasher.ts
+│   │       ├── infrastructure
+│   │       │   ├── adapters
+│   │       │   │   └── security
+│   │       │   │       ├── BcryptPasswordHasherAdapter.ts
+│   │       │   │       └── JwtAdapter.ts
+│   │       │   ├── config
+│   │       │   │   ├── database.config.ts
+│   │       │   │   └── envs.ts
+│   │       │   ├── controller
+│   │       │   │   └── BaseController.ts
+│   │       │   ├── database
+│   │       │   │   ├── database.module.ts
+│   │       │   │   ├── migrations
+│   │       │   │   ├── repositories
+│   │       │   │   │   └── base-repository.ts
+│   │       │   │   └── seeders
+│   │       │   ├── logging
+│   │       │   │   ├── logger.config.ts
+│   │       │   │   ├── logger.service.ts
+│   │       │   │   └── logger.ts
+│   │       │   ├── security
+│   │       │   │   └── middlewares
+│   │       │   │       └── security-injection-detector.middleware.ts
+│   │       │   └── services
+│   │       └── utils
+│   │           └── security-injection-detector.util.ts
 │   ├── main.ts
 │   └── modules
 │       ├── auth
@@ -75,8 +89,10 @@ This is a basic authentication project (Login + Registration) built with NestJS 
 │       │   │   │   └── LoginUserDto.ts
 │       │   │   ├── mappers
 │       │   │   │   └── UserMapper.ts
-│       │   │   ├── queries
-│       │   │   │   └── GetUserDetailsQuery.ts
+│       │   │   ├── ports
+│       │   │   │   └── login.port.ts
+│       │   │   ├── types
+│       │   │   │   └── LoginResponse.ts
 │       │   │   └── use-cases
 │       │   │       └── LoginUserUseCase.ts
 │       │   ├── auth.module.ts
@@ -85,18 +101,17 @@ This is a basic authentication project (Login + Registration) built with NestJS 
 │       │   │   │   └── UserEntity.ts
 │       │   │   ├── repositories
 │       │   │   │   └── IUserRepository.ts
-│       │   │   ├── services
-│       │   │   │   └── AuthDomainService.ts
 │       │   │   └── value-objects
 │       │   │       ├── VOEmail.ts
 │       │   │       └── VOPassword.ts
 │       │   └── infrastructure
 │       │       ├── controllers
 │       │       │   └── AuthController.ts
-│       │       ├── repositories
-│       │       │   └── UserRepositoryImpl.ts
-│       │       └── services
-│       │           └── JwtService.ts
+│       │       ├── database
+│       │       │   └── models
+│       │       │       └── UserModel.ts
+│       │       └── repositories
+│       │           └── UserRepositoryImpl.ts
 │       └── user-registration
 │           ├── application
 │           │   ├── dto
