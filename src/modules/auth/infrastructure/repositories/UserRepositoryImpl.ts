@@ -1,29 +1,24 @@
+// user-repository.impl.ts
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserModel } from '@auth/infrastructure/database/models/UserModel';
 import { IUserRepository } from '@auth/domain/repositories/IUserRepository';
-import { UserEntity } from '@auth/domain/entities/UserEntity';
+import { BaseRepository } from '@common/shared/infrastructure/database/repositories/base-repository';
 
 @Injectable()
-export class UserRepositoryImpl implements IUserRepository {
+export class UserRepositoryImpl
+  extends BaseRepository<UserModel>
+  implements IUserRepository
+{
   constructor(
     @InjectRepository(UserModel)
-    private readonly userRepository: Repository<UserModel>
-  ) {}
+    repository: Repository<UserModel>
+  ) {
+    super(repository);
+  }
 
-  async findByEmail(email: string): Promise<UserEntity | null> {
-    const user = await this.userRepository.findOne({ where: { email } });
-    if (!user) {
-      return null;
-    }
-
-    return new UserEntity(
-      user.id,
-      user.name,
-      user.lastName,
-      user.email,
-      user.password
-    );
+  async findByEmail(email: string): Promise<UserModel | null> {
+    return this.findOne({ email });
   }
 }

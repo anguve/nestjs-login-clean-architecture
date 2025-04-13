@@ -1,23 +1,16 @@
-export class VOEmail {
-  private readonly value: string;
+import { VOBaseString } from '@common/shared/domain/value-objects/VOString';
 
+export class VOEmail extends VOBaseString {
   constructor(email: string) {
-    if (!email || !this.isValidEmail(email)) {
+    super(email);
+
+    if (!this.isValidEmail(email)) {
       throw new Error('El correo electrónico no es válido.');
     }
-    this.value = email;
   }
 
   private isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
-  }
-
-  getValue(): string {
-    return this.value;
-  }
-
-  equals(other: VOEmail): boolean {
-    return this.value === other.getValue();
   }
 }

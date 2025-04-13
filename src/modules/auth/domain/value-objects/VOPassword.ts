@@ -1,24 +1,19 @@
-export class VOPassword {
-  private readonly value: string;
+import { VOBaseString } from '@common/shared/domain/value-objects/VOString';
 
+export class VOPassword extends VOBaseString {
   constructor(password: string) {
-    if (!password || !this.isValidPassword(password)) {
+    super(password);
+
+    if (!this.isValidPassword(password)) {
       throw new Error(
-        'La contraseña no es válida. Debe tener al menos 8 caracteres.'
+        'La contraseña no es válida. Debe tener al menos 8 caracteres, incluir una letra mayúscula, una letra minúscula y un número.'
       );
     }
-    this.value = password;
   }
 
   private isValidPassword(password: string): boolean {
-    return password.length >= 8;
-  }
-
-  getValue(): string {
-    return this.value;
-  }
-
-  equals(other: VOPassword): boolean {
-    return this.value === other.getValue();
+    const passwordRegex = /^\d+$/;
+    //const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    return passwordRegex.test(password);
   }
 }

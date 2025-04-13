@@ -8,33 +8,69 @@ import {
   I_USER_REPOSITORY,
   IUserRepository
 } from '@auth/domain/repositories/IUserRepository';
+import {
+  I_PASSWORD_HASHER_PORT,
+  IPasswordHasherPort
+} from '@common/shared/domain/ports/IPasswordHasherPort';
+import {
+  I_JWT_SERVICE_PORT,
+  IJwtServicePort
+} from '@common/shared/domain/ports/IJwtServicePort';
+import { UserEntity } from '@auth/domain/entities/UserEntity';
+import { NotFoundDomainException } from '@common/shared/domain/errors/NotFoundDomainException';
+import { UnauthorizedDomainException } from '@common/shared/domain/errors/UnauthorizedDomainException';
 
 @Injectable()
 export class LoginUserUseCase implements LoginPort {
   constructor(
-    @Inject(I_USER_REPOSITORY) private readonly userRepository: IUserRepository
+    @Inject(I_USER_REPOSITORY)
+    private readonly userRepository: IUserRepository,
+    @Inject(I_PASSWORD_HASHER_PORT)
+    private readonly passwordHasherPort: IPasswordHasherPort,
+    @Inject(I_JWT_SERVICE_PORT)
+    private readonly jwtServicePort: IJwtServicePort
   ) {}
 
   async execute(data: LoginUserDto): Promise<LoginResponse> {
     const email = new VOEmail(data.email);
     const password = new VOPassword(data.password);
+    const user = await this.validateUser(email);
+    await this.validatePassword(password, user.password);
+    const jwt = await this.buildJwt(user);
 
-    const user = await this.userRepository.findByEmail(email.getValue());
+    return this.buildSuccessResponse(jwt);
+  }
 
-    console.log(user?.email);
+  private async buildJwt(user: UserEntity) {
+    return this.jwtServicePort.sign({
+      name: user.name,
+      lastName: user.lastName,
+      email: user.email,
+      id: user.id
+    });
+  }
 
+  private async validateUser(email: VOEmail) {
+    const user = await this.userRepository.findByEmail(email.value);
     if (!user) {
-      console.log(user);
+      throw new NotFoundDomainException('Usuario no válido');
     }
+    return user;
+  }
 
-    if (!password) {
-      console.log(password);
+  private async validatePassword(password: VOPassword, hashedPassword: string) {
+    const isValid = await this.passwordHasherPort.compare(
+      password.value,
+      hashedPassword
+    );
+    if (!isValid) {
+      throw new UnauthorizedDomainException('Contraseña inválida');
     }
+  }
 
+  private buildSuccessResponse(jwt: string): LoginResponse {
     return {
-      success: true,
-      message: 'hola',
-      token: 'hola'
+      token: jwt
     };
   }
 }
