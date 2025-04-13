@@ -1,12 +1,18 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Post, Inject, Body } from '@nestjs/common';
 
-@Controller('auth')
+import { LoginUserDto } from '@auth/application/dto/LoginUserDto';
+import { LOGIN_PORT, LoginPort } from '@auth/application/ports/login.port';
+import { LoginResponse } from '@auth/application/types/LoginResponse';
+
+@Controller('api/auth')
 export class AuthController {
-  constructor() {}
+  constructor(@Inject(LOGIN_PORT) private readonly loginPort: LoginPort) {}
 
   @Post('login/v1')
-  login() {}
+  login(@Body() data: LoginUserDto): Promise<LoginResponse> {
+    return this.loginPort.execute(data);
+  }
 
-  @Post('loggout/v1')
-  loggout() {}
+  @Post('logout/v1')
+  logout() {}
 }
