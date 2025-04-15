@@ -18,7 +18,4 @@ export class AuthController extends BaseController {
     const result = await this.loginPort.execute(data);
     return this.createResponse(result, 'Login exitoso');
   }
-
-  @Post('logout/v1')
-  logout() {}
 }

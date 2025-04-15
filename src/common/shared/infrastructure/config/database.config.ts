@@ -3,7 +3,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join } from 'path';
 
 import { validatedEnvVars } from '@common/shared/infrastructure/config/envs';
-import { UserModel } from '@auth/infrastructure/database/models/UserModel';
+import { UserModel } from '@common/shared/infrastructure/database/models/UserModel';
 
 export default registerAs('database', () => ({
   type: 'postgres',

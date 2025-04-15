@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserModel } from '@common/shared/infrastructure/database/models/UserModel';
-import { IUserRepository } from '@auth/domain/repositories/IUserRepository';
+
 import { BaseRepository } from '@common/shared/infrastructure/database/repositories/base-repository';
+
+import { IUserRepository } from '@user-registration/domain/repositories/IUserRepository';
+import { UserRegisterDto } from '@user-registration/application/dto/UserRegisterDto';
+import { UserModel } from '@common/shared/infrastructure/database/models/UserModel';
 
 @Injectable()
 export class UserRepositoryImpl
@@ -17,7 +20,7 @@ export class UserRepositoryImpl
     super(repository);
   }
 
-  async findByEmail(email: string): Promise<UserModel | null> {
-    return this.findOne({ email });
+  async save(data: UserRegisterDto): Promise<UserModel> {
+    return this.create(data);
   }
 }

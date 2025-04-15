@@ -5,7 +5,7 @@ import { LOGIN_PORT } from '@auth/application/ports/login.port';
 import { I_USER_REPOSITORY } from '@auth/domain/repositories/IUserRepository';
 import { UserRepositoryImpl } from '@auth/infrastructure/repositories/UserRepositoryImpl';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModel } from '@auth/infrastructure/database/models/UserModel';
+import { UserModel } from '@common/shared/infrastructure/database/models/UserModel';
 import { I_PASSWORD_HASHER_PORT } from '@common/shared/domain/ports/IPasswordHasherPort';
 import { BcryptPasswordHasherAdapter } from '@common/shared/infrastructure/adapters/security/BcryptPasswordHasherAdapter';
 import { I_JWT_SERVICE_PORT } from '@common/shared/domain/ports/IJwtServicePort';

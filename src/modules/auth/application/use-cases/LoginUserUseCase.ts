@@ -38,7 +38,9 @@ export class LoginUserUseCase implements LoginPort {
     await this.validatePassword(password, user.password);
     const jwt = await this.buildJwt(user);
 
-    return this.buildSuccessResponse(jwt);
+    return {
+      token: jwt
+    };
   }
 
   private async buildJwt(user: UserEntity) {
@@ -66,11 +68,5 @@ export class LoginUserUseCase implements LoginPort {
     if (!isValid) {
       throw new UnauthorizedDomainException('Contraseña inválida');
     }
-  }
-
-  private buildSuccessResponse(jwt: string): LoginResponse {
-    return {
-      token: jwt
-    };
   }
 }
