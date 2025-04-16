@@ -37,4 +37,8 @@ export class BaseRepository<T extends ObjectLiteral>
   async delete(id: number | string): Promise<void> {
     await this.repository.delete(id);
   }
+
+  async search(where: FindOptionsWhere<T>): Promise<T[]> {
+    return this.repository.find({ where });
+  }
 }

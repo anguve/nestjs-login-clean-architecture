@@ -23,4 +23,20 @@ export class UserRepositoryImpl
   async save(data: UserRegisterDto): Promise<UserModel> {
     return this.create(data);
   }
+
+  async getAll(): Promise<any> {
+    return this.findAll();
+  }
+
+  async getById(data: any): Promise<any> {
+    return this.findOneById(data);
+  }
+
+  async updateUser(id: string, data: any): Promise<UserModel> {
+    return this.update(id, data);
+  }
+
+  async searchUser(data: any): Promise<UserModel[]> {
+    return this.search(data);
+  }
 }
