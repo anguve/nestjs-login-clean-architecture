@@ -1,12 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-
+import { FindManyOptions, Repository } from 'typeorm';
+import { UserModel } from '@common/shared/infrastructure/database/models/UserModel';
 import { BaseRepository } from '@common/shared/infrastructure/database/repositories/base-repository';
-
 import { IUserRepository } from '@user-registration/domain/repositories/IUserRepository';
 import { UserRegisterDto } from '@user-registration/application/dto/UserRegisterDto';
-import { UserModel } from '@common/shared/infrastructure/database/models/UserModel';
 
 @Injectable()
 export class UserRepositoryImpl
@@ -32,11 +30,14 @@ export class UserRepositoryImpl
     return this.findOneById(data);
   }
 
-  async updateUser(id: string, data: any): Promise<UserModel> {
+  async updateUser(
+    id: string,
+    data: { isActive: boolean }
+  ): Promise<UserModel> {
     return this.update(id, data);
   }
 
-  async searchUser(data: any): Promise<UserModel[]> {
-    return this.search(data);
+  async searchUser(options: FindManyOptions<UserModel>): Promise<UserModel[]> {
+    return this.search(options);
   }
 }

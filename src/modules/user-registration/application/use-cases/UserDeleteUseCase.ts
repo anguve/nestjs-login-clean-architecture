@@ -1,13 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
-
+import { UnauthorizedDomainException } from '@common/shared/domain/errors/UnauthorizedDomainException';
+import { UserDeletePort } from '@user-registration/application/ports/userDeletePort';
+import { UserDeleteResponse } from '@user-registration/application/types/UserDeleteResponse';
+import { UserDeleteDto } from '@user-registration/application/dto/UserDeleteDto';
+import { UserAggregateRoot } from '@user-registration/domain/aggregates/UserAggregateRoot';
 import {
   I_USER_REGISTER_REPOSITORY,
   IUserRepository
 } from '@user-registration/domain/repositories/IUserRepository';
-import { UnauthorizedDomainException } from '@common/shared/domain/errors/UnauthorizedDomainException';
-
-import { UserDeletePort } from '../ports/userDeletePort';
-import { VOUuid } from '@user-registration/domain/value-objects/VOUuid';
 
 @Injectable()
 export class UserDeleteUseCase implements UserDeletePort {
@@ -16,20 +16,20 @@ export class UserDeleteUseCase implements UserDeletePort {
     private readonly userRepository: IUserRepository
   ) {}
 
-  async execute(data: any): Promise<any> {
-    const valueObjects = await this.buildValueObjects(data);
+  async execute(data: UserDeleteDto): Promise<UserDeleteResponse> {
+    const userAggregateRoot = await this.buildValueObjects(data);
 
-    await this.userRegisterDB(valueObjects);
+    await this.userRegisterDB(userAggregateRoot.toPrimitives().id as string);
 
     return {};
   }
 
-  private async buildValueObjects(data: any) {
-    return new VOUuid(data.id).value;
+  private async buildValueObjects(data: UserDeleteDto) {
+    return new UserAggregateRoot(data);
   }
 
-  private async userRegisterDB(data: any) {
-    const response = await this.userRepository.updateUser(data, {
+  private async userRegisterDB(userPrimitives: string) {
+    const response = await this.userRepository.updateUser(userPrimitives, {
       isActive: false
     });
     if (!response) {

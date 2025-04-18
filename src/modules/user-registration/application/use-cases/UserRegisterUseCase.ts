@@ -1,20 +1,20 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UserRegisterPort } from '../ports/userRegisterPort';
-import { UserRegisterDto } from '../dto/UserRegisterDto';
-import { VOEmail } from '@user-registration/domain/value-objects/VOEmail';
-import { VOName } from '@user-registration/domain/value-objects/VOName';
-import { VOLastName } from '@user-registration/domain/value-objects/VOLastName';
-import { VOPassword } from '@auth/domain/value-objects/VOPassword';
-import { UserRegisterResponse } from '../types/UserRegisterResponse';
-import {
-  I_USER_REGISTER_REPOSITORY,
-  IUserRepository
-} from '@user-registration/domain/repositories/IUserRepository';
 import { UnauthorizedDomainException } from '@common/shared/domain/errors/UnauthorizedDomainException';
 import {
   I_PASSWORD_HASHER_PORT,
   IPasswordHasherPort
 } from '@common/shared/domain/ports/IPasswordHasherPort';
+import { UserRegisterPort } from '@user-registration/application/ports/userRegisterPort';
+import { UserRegisterDto } from '@user-registration/application/dto/UserRegisterDto';
+import { VOEmail } from '@user-registration/domain/value-objects/VOEmail';
+import { VOName } from '@user-registration/domain/value-objects/VOName';
+import { VOLastName } from '@user-registration/domain/value-objects/VOLastName';
+import { VOPassword } from '@auth/domain/value-objects/VOPassword';
+import { UserRegisterResponse } from '@user-registration/application/types/UserRegisterResponse';
+import {
+  I_USER_REGISTER_REPOSITORY,
+  IUserRepository
+} from '@user-registration/domain/repositories/IUserRepository';
 
 @Injectable()
 export class UserRegisterUseCase implements UserRegisterPort {

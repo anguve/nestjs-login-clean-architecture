@@ -2,7 +2,8 @@ import {
   Repository,
   DeepPartial,
   FindOptionsWhere,
-  ObjectLiteral
+  ObjectLiteral,
+  FindManyOptions
 } from 'typeorm';
 import { IBaseRepositoryPort } from '@common/shared/domain/ports/IBaseRepositoryPort';
 
@@ -38,7 +39,7 @@ export class BaseRepository<T extends ObjectLiteral>
     await this.repository.delete(id);
   }
 
-  async search(where: FindOptionsWhere<T>): Promise<T[]> {
-    return this.repository.find({ where });
+  async search(options: FindManyOptions<T>): Promise<T[]> {
+    return this.repository.find(options);
   }
 }

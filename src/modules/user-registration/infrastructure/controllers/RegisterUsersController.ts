@@ -1,7 +1,9 @@
 import { BaseResponseDto } from '@common/shared/dto/base-response.dto';
 import { BaseController } from '@common/shared/infrastructure/controller/BaseController';
 import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
+import { UserDeleteDto } from '@user-registration/application/dto/UserDeleteDto';
 import { UserRegisterDto } from '@user-registration/application/dto/UserRegisterDto';
+import { UserSearchDto } from '@user-registration/application/dto/UserSearchDto';
 import {
   USER_DELETE_PORT,
   UserDeletePort
@@ -26,7 +28,9 @@ import {
   USER_UPDATE_PORT,
   UserUpdatePort
 } from '@user-registration/application/ports/userUpdatePort';
+import { UserDeleteResponse } from '@user-registration/application/types/UserDeleteResponse';
 import { UserRegisterResponse } from '@user-registration/application/types/UserRegisterResponse';
+import { UserSearchResponse } from '@user-registration/application/types/UserSearchResponse';
 
 @Controller('api/users')
 export class RegisterUsersController extends BaseController {
@@ -79,16 +83,16 @@ export class RegisterUsersController extends BaseController {
 
   @Post('remove/v1')
   async delete(
-    @Body() data: any
-  ): Promise<BaseResponseDto<UserRegisterResponse>> {
+    @Body() data: UserDeleteDto
+  ): Promise<BaseResponseDto<UserDeleteResponse>> {
     const result = await this.userDeletePort.execute(data);
     return this.createResponse(result, 'Se removió le usuario correctamente');
   }
 
   @Post('search/v1')
   async search(
-    @Body() data: UserRegisterDto
-  ): Promise<BaseResponseDto<UserRegisterResponse>> {
+    @Body() data: UserSearchDto
+  ): Promise<BaseResponseDto<UserSearchResponse>> {
     const result = await this.userSearchPort.execute(data);
     return this.createResponse(result, 'Registro de usuario exitoso');
   }
