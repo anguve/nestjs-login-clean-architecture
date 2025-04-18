@@ -1,5 +1,5 @@
-import { LoginUserDto } from '@auth/application/dto/LoginUserDto';
-import { LoginResponse } from '@auth/application/types/LoginResponse';
+import { LoginUserDto } from '@auth/application/dto/login-user.dto';
+import { LoginResponse } from '@auth/application/types/login-response';
 
 export const LOGIN_PORT: unique symbol = Symbol('LOGIN_PORT');
 

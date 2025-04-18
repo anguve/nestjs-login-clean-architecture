@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from '@auth/infrastructure/controllers/AuthController';
-import { LoginUserUseCase } from '@auth/application/use-cases/LoginUserUseCase';
+import { AuthController } from '@auth/infrastructure/controllers/auth.controller';
+import { LoginUserUseCase } from '@auth/application/use-cases/login-user.use-case';
 import { LOGIN_PORT } from '@auth/application/ports/login.port';
-import { I_USER_REPOSITORY } from '@auth/domain/repositories/IUserRepository';
-import { UserRepositoryImpl } from '@auth/infrastructure/repositories/UserRepositoryImpl';
+import { I_USER_REPOSITORY } from '@auth/domain/repositories/user-repository.interface';
+import { UserRepositoryImpl } from '@auth/infrastructure/repositories/user-repository.impl';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModel } from '@common/shared/infrastructure/database/models/UserModel';
-import { I_PASSWORD_HASHER_PORT } from '@common/shared/domain/ports/IPasswordHasherPort';
-import { BcryptPasswordHasherAdapter } from '@common/shared/infrastructure/adapters/security/BcryptPasswordHasherAdapter';
-import { I_JWT_SERVICE_PORT } from '@common/shared/domain/ports/IJwtServicePort';
-import { JwtAdapter } from '@common/shared/infrastructure/adapters/security/JwtAdapter';
+import { UserModel } from '@common/shared/infrastructure/database/models/user.model';
+import { I_PASSWORD_HASHER_PORT } from '@common/shared/domain/ports/password-hasher.port';
+import { BcryptPasswordHasherAdapter } from '@common/shared/infrastructure/adapters/security/bcrypt-password-hasher.adapter';
+import { I_JWT_SERVICE_PORT } from '@common/shared/domain/ports/jwt-service.port';
+import { JwtAdapter } from '@common/shared/infrastructure/adapters/security/jwt.adapter';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserModel])],

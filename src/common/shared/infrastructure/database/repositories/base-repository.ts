@@ -5,7 +5,7 @@ import {
   ObjectLiteral,
   FindManyOptions
 } from 'typeorm';
-import { IBaseRepositoryPort } from '@common/shared/domain/ports/IBaseRepositoryPort';
+import { IBaseRepositoryPort } from '@common/shared/domain/ports/base-repository.port';
 
 export class BaseRepository<T extends ObjectLiteral>
   implements IBaseRepositoryPort<T>

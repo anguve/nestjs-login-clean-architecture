@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { validatedEnvVars } from '@common/shared/infrastructure/config/envs';
-import { GlobalExceptionFilter } from '@common/filters/GlobalExceptionFilter';
 import { ValidationPipe } from '@nestjs/common';
+import { validatedEnvVars } from '@common/shared/infrastructure/config/envs';
+import { GlobalExceptionFilter } from '@common/shared/infrastructure/filters/global-exception.filter';
+import { AppModule } from '@src/app.module';
 
 const DEFAULT_SERVER_PORT = 3000;
 const DEFAULT_SERVER_HOST = '0.0.0.0';
