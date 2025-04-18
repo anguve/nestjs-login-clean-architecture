@@ -1,5 +1,3 @@
-// src/user-registration/domain/aggregates/UserAggregateRoot.ts
-
 import { AggregateRootBase } from '@common/shared/domain/AggregateRootBase';
 import { VOEmail } from '@user-registration/domain/value-objects/VOEmail';
 import { VOName } from '@user-registration/domain/value-objects/VOName';
@@ -11,7 +9,6 @@ export class UserAggregateRoot extends AggregateRootBase<VOUuid> {
   private readonly email?: VOEmail;
   private readonly name?: VOName;
   private readonly lastName?: VOLastName;
-  // private readonly id?: VOUuid;
 
   constructor(props: {
     id?: string;
@@ -27,7 +24,6 @@ export class UserAggregateRoot extends AggregateRootBase<VOUuid> {
   }
 
   public searchUser(): void {
-    // Opcional: solo lanza evento si al menos uno está presente
     if (this.email || this.name || this.lastName) {
       this.addDomainEvent(new UserFoundEvent(this));
     }

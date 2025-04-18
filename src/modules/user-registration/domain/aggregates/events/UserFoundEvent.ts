@@ -1,5 +1,3 @@
-// src/user-registration/domain/aggregates/events/UserFoundEvent.ts
-
 import { DomainEventBase } from '@common/shared/domain/events/IDomainEvent';
 import { UserAggregateRoot } from '@user-registration/domain/aggregates/UserAggregateRoot';
 
