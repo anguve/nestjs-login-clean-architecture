@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { UserRegisterDto } from '../dto/user-register.dto';
+import { UserGetByIdResponse } from '@user-registration/application/types/user-get-by-id-response';
+import { UserGetByIdDto } from '@user-registration/application/dto/user-get-by-id.dto';
 
 import {
   I_USER_REGISTER_REPOSITORY,
@@ -9,7 +10,7 @@ import {
 import { UnauthorizedDomainException } from '@common/shared/domain/errors/unauthorized-domain.exception';
 
 import { UserGetByIdPort } from '../ports/user-get-by-id.port';
-import { VOUuid } from '@user-registration/domain/value-objects/vo-uuid';
+import { UserGetByIdAggregateRoot } from '../../domain/aggregates/user-get-by-id.aggregate-root';
 
 @Injectable()
 export class UserGetByIdUseCase implements UserGetByIdPort {
@@ -18,25 +19,25 @@ export class UserGetByIdUseCase implements UserGetByIdPort {
     private readonly userRepository: IUserRepository
   ) {}
 
-  async execute(data: UserRegisterDto): Promise<any> {
-    const valueObjects = await this.buildAggregateRoot(data);
-
-    const response = await this.getUserByIdDB(valueObjects);
-
+  async execute(data: UserGetByIdDto): Promise<UserGetByIdResponse> {
+    const userGetByIdAggregateRoot = this.buildAggregateRoot(data);
+    const response = await this.getUserByIdDB(
+      userGetByIdAggregateRoot.toPrimitives()
+    );
     return {
-      user: response
+      users: response
     };
   }
 
-  private async buildAggregateRoot(data: any) {
-    return new VOUuid(data.id).value;
+  private buildAggregateRoot(data: UserGetByIdDto): UserGetByIdAggregateRoot {
+    return new UserGetByIdAggregateRoot(data);
   }
 
-  private async getUserByIdDB(data: any) {
-    const response = await this.userRepository.getById(data);
+  private async getUserByIdDB(userPrimitives: string) {
+    const response = await this.userRepository.getById(userPrimitives);
     if (!response) {
       throw new UnauthorizedDomainException(
-        'Algo salio mal en la creación del usuario'
+        'Algo salio mal obteniendo el usuario'
       );
     }
     return response;

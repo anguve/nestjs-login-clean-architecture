@@ -21,16 +21,48 @@ export class UserRepositoryImpl
     super(repository);
   }
 
-  async save(data: UserRegisterDto): Promise<any> {
-    return this.create(data);
+  async save(data: UserRegisterDto): Promise<UserRegisterUserEntity> {
+    await this.create(data);
+    return new UserRegisterUserEntity(BaseUserEntity.createEmptyUserEntity());
   }
 
-  async getAll(): Promise<any> {
-    return this.findAll();
+  async getAll(): Promise<UserRegisterUserEntity[]> {
+    const models = await this.findAll();
+
+    return models.map(
+      (model) =>
+        new UserRegisterUserEntity(
+          BaseUserEntity.withoutPassword({
+            id: model.id,
+            name: model.name,
+            lastName: model.lastName,
+            email: model.email,
+            isActive: model.isActive,
+            isDeleted: model.isDeleted,
+            createdAt: model.createdAt,
+            updatedAt: model.updatedAt
+          })
+        )
+    );
   }
 
-  async getById(data: any): Promise<any> {
-    return this.findOneById(data);
+  async getById(data: string): Promise<UserRegisterUserEntity | null> {
+    const model = await this.findOneById(data);
+    if (!model) {
+      return null;
+    }
+    return new UserRegisterUserEntity(
+      BaseUserEntity.withoutPassword({
+        id: model.id,
+        name: model.name,
+        lastName: model.lastName,
+        email: model.email,
+        isActive: model.isActive,
+        isDeleted: model.isDeleted,
+        createdAt: model.createdAt,
+        updatedAt: model.updatedAt
+      })
+    );
   }
 
   async updateUser(data: UserUpdateDto): Promise<UserRegisterUserEntity> {
@@ -50,7 +82,6 @@ export class UserRepositoryImpl
     options: FindManyOptions<UserModel>
   ): Promise<UserRegisterUserEntity[]> {
     const models = await this.search(options);
-
     return models.map(
       (model) =>
         new UserRegisterUserEntity(

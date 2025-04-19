@@ -33,6 +33,8 @@ import { UserRegisterResponse } from '@user-registration/application/types/user-
 import { UserSearchResponse } from '@user-registration/application/types/user-search-response';
 import { UserUpdateDto } from '@user-registration/application/dto/user-update.dto';
 import { UserUpdateResponse } from '@user-registration/application/types/user-update-response';
+import { UserGetByIdDto } from '@user-registration/application/dto/user-get-by-id.dto';
+import { UserGetByIdResponse } from '@user-registration/application/types/user-get-by-id-response';
 
 @Controller('api/users')
 export class RegisterUsersController extends BaseController {
@@ -61,30 +63,30 @@ export class RegisterUsersController extends BaseController {
 
   @Post('get-by-id/v1')
   async getById(
-    @Body() data: UserRegisterDto
-  ): Promise<BaseResponseDto<UserRegisterResponse>> {
+    @Body() data: UserGetByIdDto
+  ): Promise<BaseResponseDto<UserGetByIdResponse>> {
     const result = await this.userGetByIdPort.execute(data);
     return this.createResponse(result, 'Usuario Obtenido correctamente');
   }
 
-  @Post('add/v1')
-  async add(
+  @Post('created/v1')
+  async created(
     @Body() data: UserRegisterDto
   ): Promise<BaseResponseDto<UserRegisterResponse>> {
     const result = await this.userRegisterPort.execute(data);
     return this.createResponse(result, 'Registro de usuario exitoso');
   }
 
-  @Post('change/v1')
-  async update(
+  @Post('updated/v1')
+  async updated(
     @Body() data: UserUpdateDto
   ): Promise<BaseResponseDto<UserUpdateResponse>> {
     const result = await this.userUpdatePort.execute(data);
     return this.createResponse(result, 'EL usuario se actualizo correctamente');
   }
 
-  @Post('remove/v1')
-  async delete(
+  @Post('deleted/v1')
+  async deleted(
     @Body() data: UserDeleteDto
   ): Promise<BaseResponseDto<UserDeleteResponse>> {
     const result = await this.userDeletePort.execute(data);

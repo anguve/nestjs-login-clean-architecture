@@ -7,8 +7,8 @@ import { IPrimitivesUpdate } from '@user-registration/domain/interfaces/primitiv
 export const I_USER_REGISTER_REPOSITORY = Symbol('I_USER_REGISTER_REPOSITORY');
 export interface IUserRepository {
   save(data: UserRegisterDto): Promise<UserRegisterUserEntity | null>;
-  getAll(): Promise<UserRegisterUserEntity | null>;
-  getById(data: any): Promise<UserRegisterUserEntity | null>;
+  getAll(): Promise<UserRegisterUserEntity[] | null>;
+  getById(data: string): Promise<UserRegisterUserEntity | null>;
   updateUser(data: IPrimitivesUpdate): Promise<UserRegisterUserEntity | null>;
   deleteUser(
     id: string,
