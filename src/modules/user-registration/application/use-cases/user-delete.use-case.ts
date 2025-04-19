@@ -3,7 +3,7 @@ import { UnauthorizedDomainException } from '@common/shared/domain/errors/unauth
 import { UserDeletePort } from '@user-registration/application/ports/user-delete.port';
 import { UserDeleteResponse } from '@user-registration/application/types/user-delete-response';
 import { UserDeleteDto } from '@user-registration/application/dto/user-delete.dto';
-import { UserAggregateRoot } from '@user-registration/domain/aggregates/user.aggregate-root';
+import { UserAggregateRoot } from '@src/modules/user-registration/domain/aggregates/base-user.aggregate-root';
 import {
   I_USER_REGISTER_REPOSITORY,
   IUserRepository
@@ -17,19 +17,17 @@ export class UserDeleteUseCase implements UserDeletePort {
   ) {}
 
   async execute(data: UserDeleteDto): Promise<UserDeleteResponse> {
-    const userAggregateRoot = await this.buildValueObjects(data);
-
+    const userAggregateRoot = this.buildAggregateRoot(data);
     await this.userRegisterDB(userAggregateRoot.toPrimitives().id as string);
-
     return {};
   }
 
-  private async buildValueObjects(data: UserDeleteDto) {
+  private buildAggregateRoot(data: UserDeleteDto): UserAggregateRoot {
     return new UserAggregateRoot(data);
   }
 
   private async userRegisterDB(userPrimitives: string) {
-    const response = await this.userRepository.updateUser(userPrimitives, {
+    const response = await this.userRepository.deleteUser(userPrimitives, {
       isActive: false
     });
     if (!response) {

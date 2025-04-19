@@ -2,13 +2,13 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import { UnauthorizedDomainException } from '@common/shared/domain/errors/unauthorized-domain.exception';
 import { UserSearchPort } from '@user-registration/application/ports/user-search.port';
-import { UserAggregateRoot } from '@user-registration/domain/aggregates/user.aggregate-root';
 import { UserSearchResponse } from '@user-registration/application/types/user-search-response';
 import { UserSearchDto } from '@user-registration/application/dto/user-search.dto';
 import {
   I_USER_REGISTER_REPOSITORY,
   IUserRepository
 } from '@user-registration/domain/repositories/user-repository.interface';
+import { UserSearchAggregateRoot } from '../../domain/aggregates/user-search.aggregate-root';
 
 @Injectable()
 export class UserSearchUseCase implements UserSearchPort {
@@ -18,17 +18,19 @@ export class UserSearchUseCase implements UserSearchPort {
   ) {}
 
   async execute(data: UserSearchDto): Promise<UserSearchResponse> {
-    const userAggregateRoot = this.buildUserAggregateRoot(data);
+    const userSearchAggregateRoot = this.buildAggregateRoot(data);
     const response = await this.searchUserInDB(
-      userAggregateRoot.toPrimitives()
+      userSearchAggregateRoot.toPrimitives()
     );
+    console.log(response);
+
     return {
       users: response
     };
   }
 
-  private buildUserAggregateRoot(data: UserSearchDto): UserAggregateRoot {
-    return new UserAggregateRoot(data);
+  private buildAggregateRoot(data: UserSearchDto): UserSearchAggregateRoot {
+    return new UserSearchAggregateRoot(data);
   }
 
   private async searchUserInDB(userPrimitives: UserSearchDto) {

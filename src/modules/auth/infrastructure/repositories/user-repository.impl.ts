@@ -32,7 +32,9 @@ export class UserRepositoryImpl
         name: model.name,
         lastName: model.lastName,
         email: model.email,
-        password: model.password
+        password: model.password,
+        isActive: model.isActive,
+        isDeleted: model.isDeleted
       })
     );
   }

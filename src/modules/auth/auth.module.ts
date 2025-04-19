@@ -7,9 +7,10 @@ import { UserRepositoryImpl } from '@auth/infrastructure/repositories/user-repos
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModel } from '@common/shared/infrastructure/database/models/user.model';
 import { I_PASSWORD_HASHER_PORT } from '@common/shared/domain/ports/password-hasher.port';
-import { BcryptPasswordHasherAdapter } from '@common/shared/infrastructure/adapters/security/bcrypt-password-hasher.adapter';
 import { I_JWT_SERVICE_PORT } from '@common/shared/domain/ports/jwt-service.port';
 import { JwtAdapter } from '@common/shared/infrastructure/adapters/security/jwt.adapter';
+import { DatabaseEncryptionTransformer } from '@src/common/shared/infrastructure/transformers/database-encryption.transformer';
+import { validatedEnvVars } from '@src/common/shared/infrastructure/config/envs';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserModel])],
@@ -25,7 +26,11 @@ import { JwtAdapter } from '@common/shared/infrastructure/adapters/security/jwt.
     },
     {
       provide: I_PASSWORD_HASHER_PORT,
-      useClass: BcryptPasswordHasherAdapter
+      useFactory: () => {
+        return new DatabaseEncryptionTransformer(
+          validatedEnvVars.ENCRYPTION_KEY
+        );
+      }
     },
     {
       provide: I_JWT_SERVICE_PORT,

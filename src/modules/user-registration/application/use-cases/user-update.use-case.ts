@@ -1,9 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { VOEmail } from '@user-registration/domain/value-objects/vo-email';
-import { VOName } from '@user-registration/domain/value-objects/vo-name';
-import { VOLastName } from '@user-registration/domain/value-objects/vo-last-name';
-
 import {
   I_USER_REGISTER_REPOSITORY,
   IUserRepository
@@ -11,6 +7,9 @@ import {
 import { UnauthorizedDomainException } from '@common/shared/domain/errors/unauthorized-domain.exception';
 
 import { UserUpdatePort } from '../ports/user-update.port';
+import { UserUpdateDto } from '../dto/user-update.dto';
+import { UserUpdateAggregateRoot } from '../../domain/aggregates/user-update.aggregate-root';
+import { UserUpdateResponse } from '../types/user-update-response';
 
 @Injectable()
 export class UserUpdateUseCase implements UserUpdatePort {
@@ -19,28 +18,23 @@ export class UserUpdateUseCase implements UserUpdatePort {
     private readonly userRepository: IUserRepository
   ) {}
 
-  async execute(id: string, data: any): Promise<any> {
-    const valueObjects = await this.buildValueObjects(data);
-
-    await this.updateUserDB(id, valueObjects);
-
+  async execute(data: UserUpdateDto): Promise<UserUpdateResponse> {
+    const userUpdateAggregateRoot = this.buildAggregateRoot(data);
+    await this.updateUserDB(userUpdateAggregateRoot.toPrimitives());
     return {};
   }
 
-  private async buildValueObjects(data: any) {
-    return {
-      email: new VOEmail(data.email).value,
-      name: new VOName(data.name).value,
-      lastName: new VOLastName(data.lastName).value
-    };
+  private buildAggregateRoot(data: UserUpdateDto): UserUpdateAggregateRoot {
+    return new UserUpdateAggregateRoot(data);
   }
 
-  private async updateUserDB(id: string, data: any) {
-    const response = await this.userRepository.updateUser(id, data);
+  private async updateUserDB(userPrimitives: UserUpdateDto) {
+    const response = await this.userRepository.updateUser(userPrimitives);
     if (!response) {
       throw new UnauthorizedDomainException(
         'Algo salio mal en la creación del usuario'
       );
     }
+    return response;
   }
 }

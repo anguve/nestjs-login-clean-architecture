@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import { DomainEventBase } from './events/base-domain-event.interface';
 
-export abstract class AggregateRootBase<TId = string> {
-  protected readonly _id: TId;
+export class AggregateRootBase<TId = string> {
+  private readonly _id: TId;
   private readonly _domainEvents: DomainEventBase[] = [];
 
   constructor(id?: TId) {

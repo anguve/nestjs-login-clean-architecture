@@ -1,5 +1,7 @@
 import { Entity, Column } from 'typeorm';
 import { BaseModel } from './base.model';
+import { DatabaseEncryptionTransformer } from '../../transformers/database-encryption.transformer';
+import { validatedEnvVars } from '../../config/envs';
 
 @Entity('users')
 export class UserModel extends BaseModel {
@@ -12,6 +14,10 @@ export class UserModel extends BaseModel {
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({
+    transformer: new DatabaseEncryptionTransformer(
+      validatedEnvVars.ENCRYPTION_KEY
+    )
+  })
   password: string;
 }

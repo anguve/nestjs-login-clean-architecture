@@ -19,7 +19,7 @@ export class UserGetByIdUseCase implements UserGetByIdPort {
   ) {}
 
   async execute(data: UserRegisterDto): Promise<any> {
-    const valueObjects = await this.buildValueObjects(data);
+    const valueObjects = await this.buildAggregateRoot(data);
 
     const response = await this.getUserByIdDB(valueObjects);
 
@@ -28,7 +28,7 @@ export class UserGetByIdUseCase implements UserGetByIdPort {
     };
   }
 
-  private async buildValueObjects(data: any) {
+  private async buildAggregateRoot(data: any) {
     return new VOUuid(data.id).value;
   }
 

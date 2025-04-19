@@ -1,5 +1,5 @@
 import { DomainEventBase } from '@common/shared/domain/events/base-domain-event.interface';
-import { UserAggregateRoot } from '@user-registration/domain/aggregates/user.aggregate-root';
+import { UserAggregateRoot } from '@src/modules/user-registration/domain/aggregates/base-user.aggregate-root';
 
 export class UserFoundEvent extends DomainEventBase {
   constructor(private readonly user: UserAggregateRoot) {

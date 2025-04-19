@@ -31,6 +31,8 @@ import {
 import { UserDeleteResponse } from '@user-registration/application/types/user-delete-response';
 import { UserRegisterResponse } from '@user-registration/application/types/user-register-response';
 import { UserSearchResponse } from '@user-registration/application/types/user-search-response';
+import { UserUpdateDto } from '../../application/dto/user-update.dto';
+import { UserUpdateResponse } from '../../application/types/user-update-response';
 
 @Controller('api/users')
 export class RegisterUsersController extends BaseController {
@@ -75,9 +77,9 @@ export class RegisterUsersController extends BaseController {
 
   @Post('change/v1')
   async update(
-    @Body() data: any
-  ): Promise<BaseResponseDto<UserRegisterResponse>> {
-    const result = await this.userUpdatePort.execute(data.id, data.data);
+    @Body() data: UserUpdateDto
+  ): Promise<BaseResponseDto<UserUpdateResponse>> {
+    const result = await this.userUpdatePort.execute(data);
     return this.createResponse(result, 'EL usuario se actualizo correctamente');
   }
 

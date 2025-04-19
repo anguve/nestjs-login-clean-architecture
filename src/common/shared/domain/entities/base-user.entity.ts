@@ -11,7 +11,6 @@ export class BaseUserEntity {
     private readonly _updatedAt?: Date
   ) {}
 
-  // Método estático para crear con contraseña
   static withPassword({
     id,
     name,
@@ -46,7 +45,10 @@ export class BaseUserEntity {
     );
   }
 
-  // Método estático para crear sin contraseña
+  static createEmptyUserEntity(): BaseUserEntity {
+    return new BaseUserEntity();
+  }
+
   static withoutPassword({
     id,
     name,
@@ -71,7 +73,7 @@ export class BaseUserEntity {
       name,
       lastName,
       email,
-      undefined, // No password
+      undefined,
       isActive,
       isDeleted,
       createdAt,
@@ -79,7 +81,6 @@ export class BaseUserEntity {
     );
   }
 
-  // 👇 Getters públicos para acceder a los atributos
   get id(): string | undefined {
     return this._id;
   }

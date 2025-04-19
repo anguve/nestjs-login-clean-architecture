@@ -7,6 +7,7 @@ import { IUserRepository } from '@user-registration/domain/repositories/user-rep
 import { UserRegisterDto } from '@user-registration/application/dto/user-register.dto';
 import { UserRegisterUserEntity } from '../../domain/entities/user-register-user.entity';
 import { BaseUserEntity } from '@src/common/shared/domain/entities/base-user.entity';
+import { UserUpdateDto } from '../../application/dto/user-update.dto';
 
 @Injectable()
 export class UserRepositoryImpl
@@ -32,8 +33,17 @@ export class UserRepositoryImpl
     return this.findOneById(data);
   }
 
-  async updateUser(id: string, data: { isActive: boolean }): Promise<any> {
-    return this.update(id, data);
+  async updateUser(data: UserUpdateDto): Promise<UserRegisterUserEntity> {
+    await this.update(data.id, data);
+    return new UserRegisterUserEntity(BaseUserEntity.createEmptyUserEntity());
+  }
+
+  async deleteUser(
+    id: string,
+    data: { isActive: boolean }
+  ): Promise<UserRegisterUserEntity> {
+    await this.update(id, data);
+    return new UserRegisterUserEntity(BaseUserEntity.createEmptyUserEntity());
   }
 
   async searchUser(
@@ -57,17 +67,4 @@ export class UserRepositoryImpl
         )
     );
   }
-
-  /*   private toUserRegisterUserEntity(model: UserModel): UserRegisterUserEntity {
-    return new UserRegisterUserEntity({
-      id: model.id,
-      name: model.name,
-      lastName: model.lastName,
-      email: model.email,
-      isActive: model.isActive,
-      isDeleted: model.isDeleted,
-      createdAt: model.createdAt,
-      updatedAt: model.updatedAt
-    });
-  } */
 }

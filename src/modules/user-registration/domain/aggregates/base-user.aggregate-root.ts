@@ -39,7 +39,7 @@ export class UserAggregateRoot extends AggregateRootBase<VOUuid> {
   }
 
   public getId(): string | undefined {
-    return this.id?.value;
+    return this.id.value;
   }
 
   public getEmail(): string | undefined {

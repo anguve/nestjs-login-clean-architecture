@@ -26,7 +26,20 @@ export class LoginUserEntity {
     return this.user.email;
   }
 
+  get isActive(): boolean | undefined {
+    return this.user.isActive;
+  }
+
+  get isDeleted(): boolean | undefined {
+    return this.user.isDeleted;
+  }
+
   isFirstLogin(): boolean | undefined {
     return !this.lastLogin;
+  }
+
+  toJSON() {
+    const { fullName, ...rest } = this.user.toJSON();
+    return rest;
   }
 }

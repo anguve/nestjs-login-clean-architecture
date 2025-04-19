@@ -3,6 +3,6 @@ export const I_PASSWORD_HASHER_PORT: unique symbol = Symbol(
 );
 
 export interface IPasswordHasherPort {
-  hash(password: string): Promise<string>;
-  compare(plain: string, hash: string): Promise<boolean>;
+  to(password: string): string;
+  from(password: string): string;
 }

@@ -8,7 +8,6 @@ import { UserRepositoryImpl } from './infrastructure/repositories/user-repositor
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { I_PASSWORD_HASHER_PORT } from '@common/shared/domain/ports/password-hasher.port';
-import { BcryptPasswordHasherAdapter } from '@common/shared/infrastructure/adapters/security/bcrypt-password-hasher.adapter';
 import { UserModel } from '@common/shared/infrastructure/database/models/user.model';
 import { USER_DELETE_PORT } from './application/ports/user-delete.port';
 import { USER_GET_ALL_PORT } from './application/ports/user-get-all.port';
@@ -20,6 +19,8 @@ import { UserGetAllUseCase } from './application/use-cases/user-get-all.use-case
 import { UserGetByIdUseCase } from './application/use-cases/user-get-by-id.use-case';
 import { UserSearchUseCase } from './application/use-cases/user-search.use-case';
 import { UserUpdateUseCase } from './application/use-cases/user-update.use-case';
+import { DatabaseEncryptionTransformer } from '@src/common/shared/infrastructure/transformers/database-encryption.transformer';
+import { validatedEnvVars } from '@src/common/shared/infrastructure/config/envs';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserModel])],
@@ -55,7 +56,11 @@ import { UserUpdateUseCase } from './application/use-cases/user-update.use-case'
     },
     {
       provide: I_PASSWORD_HASHER_PORT,
-      useClass: BcryptPasswordHasherAdapter
+      useFactory: () => {
+        return new DatabaseEncryptionTransformer(
+          validatedEnvVars.ENCRYPTION_KEY
+        );
+      }
     }
   ]
 })
