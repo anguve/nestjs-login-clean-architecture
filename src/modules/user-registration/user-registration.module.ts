@@ -19,8 +19,8 @@ import { UserGetAllUseCase } from './application/use-cases/user-get-all.use-case
 import { UserGetByIdUseCase } from './application/use-cases/user-get-by-id.use-case';
 import { UserSearchUseCase } from './application/use-cases/user-search.use-case';
 import { UserUpdateUseCase } from './application/use-cases/user-update.use-case';
-import { DatabaseEncryptionTransformer } from '@src/common/shared/infrastructure/transformers/database-encryption.transformer';
-import { validatedEnvVars } from '@src/common/shared/infrastructure/config/envs';
+import { DatabaseEncryptionTransformer } from '@common/shared/infrastructure/transformers/database-encryption.transformer';
+import { validatedEnvVars } from '@common/shared/infrastructure/config/envs';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserModel])],

@@ -3,8 +3,8 @@ import { VOEmail } from '@user-registration/domain/value-objects/vo-email';
 import { VOName } from '@user-registration/domain/value-objects/vo-name';
 import { VOLastName } from '@user-registration/domain/value-objects/vo-last-name';
 import { VOUuid } from '@user-registration/domain/value-objects/vo-uuid';
-import { IPrimitivesRegister } from '../interfaces/primitives-register.interface';
-import { VOPassword } from '../value-objects/vo-password';
+import { IPrimitivesRegister } from '@user-registration/domain/interfaces/primitives-register.interface';
+import { VOPassword } from '@user-registration/domain/value-objects/vo-password';
 
 export class UserRegisterAggregateRoot extends AggregateRootBase<VOUuid> {
   private readonly email: VOEmail;

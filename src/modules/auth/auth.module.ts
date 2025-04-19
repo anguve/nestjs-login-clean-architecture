@@ -9,8 +9,8 @@ import { UserModel } from '@common/shared/infrastructure/database/models/user.mo
 import { I_PASSWORD_HASHER_PORT } from '@common/shared/domain/ports/password-hasher.port';
 import { I_JWT_SERVICE_PORT } from '@common/shared/domain/ports/jwt-service.port';
 import { JwtAdapter } from '@common/shared/infrastructure/adapters/security/jwt.adapter';
-import { DatabaseEncryptionTransformer } from '@src/common/shared/infrastructure/transformers/database-encryption.transformer';
-import { validatedEnvVars } from '@src/common/shared/infrastructure/config/envs';
+import { DatabaseEncryptionTransformer } from '@common/shared/infrastructure/transformers/database-encryption.transformer';
+import { validatedEnvVars } from '@common/shared/infrastructure/config/envs';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserModel])],

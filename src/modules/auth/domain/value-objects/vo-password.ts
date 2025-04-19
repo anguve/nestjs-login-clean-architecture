@@ -3,6 +3,7 @@ import { VOBaseString } from '@common/shared/domain/value-objects/vo-base-string
 export class VOPassword extends VOBaseString {
   constructor(password: string) {
     super(password);
+    console.log(password);
 
     if (!this.isValidPassword(password)) {
       throw new Error(
@@ -12,8 +13,7 @@ export class VOPassword extends VOBaseString {
   }
 
   private isValidPassword(password: string): boolean {
-    const passwordRegex = /^\d+$/;
-    //const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     return passwordRegex.test(password);
   }
 }

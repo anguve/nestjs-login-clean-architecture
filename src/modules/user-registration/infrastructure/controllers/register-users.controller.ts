@@ -31,8 +31,8 @@ import {
 import { UserDeleteResponse } from '@user-registration/application/types/user-delete-response';
 import { UserRegisterResponse } from '@user-registration/application/types/user-register-response';
 import { UserSearchResponse } from '@user-registration/application/types/user-search-response';
-import { UserUpdateDto } from '../../application/dto/user-update.dto';
-import { UserUpdateResponse } from '../../application/types/user-update-response';
+import { UserUpdateDto } from '@user-registration/application/dto/user-update.dto';
+import { UserUpdateResponse } from '@user-registration/application/types/user-update-response';
 
 @Controller('api/users')
 export class RegisterUsersController extends BaseController {

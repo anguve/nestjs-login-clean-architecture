@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import { ValueTransformer } from 'typeorm';
 import { InternalServerErrorException } from '@nestjs/common';
-import { IPasswordHasherPort } from '../../domain/ports/password-hasher.port';
+import { IPasswordHasherPort } from '@common/shared/domain/ports/password-hasher.port';
 
 export class DatabaseEncryptionTransformer
   implements ValueTransformer, IPasswordHasherPort

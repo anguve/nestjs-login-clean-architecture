@@ -1,9 +1,8 @@
 import { AggregateRootBase } from '@common/shared/domain/aggregate-root.base';
-import { VOEmail } from '@user-registration/domain/value-objects/vo-email';
-
-import { VOUuid } from '@user-registration/domain/value-objects/vo-uuid';
-import { VOPassword } from '../value-objects/vo-password';
-import { IPrimitivesLogin } from '../interfaces/primitives-login.interface';
+import { VOPassword } from '@auth/domain/value-objects/vo-password';
+import { IPrimitivesLogin } from '@auth/domain/interfaces/primitives-login.interface';
+import { VOUuid } from '@auth/domain/value-objects/vo-uuid';
+import { VOEmail } from '@auth/domain/value-objects/vo-email';
 
 export class UserLoginAggregateRoot extends AggregateRootBase<VOUuid> {
   private readonly email: VOEmail;

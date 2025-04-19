@@ -1,15 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
-
+import { UnauthorizedDomainException } from '@common/shared/domain/errors/unauthorized-domain.exception';
+import { UserUpdatePort } from '@user-registration/application/ports/user-update.port';
+import { UserUpdateDto } from '@user-registration/application/dto/user-update.dto';
+import { UserUpdateAggregateRoot } from '@user-registration/domain/aggregates/user-update.aggregate-root';
+import { UserUpdateResponse } from '@user-registration/application/types/user-update-response';
 import {
   I_USER_REGISTER_REPOSITORY,
   IUserRepository
 } from '@user-registration/domain/repositories/user-repository.interface';
-import { UnauthorizedDomainException } from '@common/shared/domain/errors/unauthorized-domain.exception';
-
-import { UserUpdatePort } from '../ports/user-update.port';
-import { UserUpdateDto } from '../dto/user-update.dto';
-import { UserUpdateAggregateRoot } from '../../domain/aggregates/user-update.aggregate-root';
-import { UserUpdateResponse } from '../types/user-update-response';
 
 @Injectable()
 export class UserUpdateUseCase implements UserUpdatePort {

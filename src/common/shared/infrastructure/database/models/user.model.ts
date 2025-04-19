@@ -1,7 +1,7 @@
 import { Entity, Column } from 'typeorm';
 import { BaseModel } from './base.model';
-import { DatabaseEncryptionTransformer } from '../../transformers/database-encryption.transformer';
-import { validatedEnvVars } from '../../config/envs';
+import { DatabaseEncryptionTransformer } from '@common/shared/infrastructure/transformers/database-encryption.transformer';
+import { validatedEnvVars } from '@common/shared/infrastructure/config/envs';
 
 @Entity('users')
 export class UserModel extends BaseModel {

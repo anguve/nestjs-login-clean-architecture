@@ -1,4 +1,4 @@
-import { BaseUserEntity } from '@src/common/shared/domain/entities/base-user.entity';
+import { BaseUserEntity } from '@common/shared/domain/entities/base-user.entity';
 
 export class UserRegisterUserEntity {
   constructor(

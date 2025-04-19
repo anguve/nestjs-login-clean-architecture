@@ -2,12 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, Repository } from 'typeorm';
 import { UserModel } from '@common/shared/infrastructure/database/models/user.model';
+import { BaseUserEntity } from '@common/shared/domain/entities/base-user.entity';
 import { BaseRepository } from '@common/shared/infrastructure/database/repositories/base-repository';
 import { IUserRepository } from '@user-registration/domain/repositories/user-repository.interface';
 import { UserRegisterDto } from '@user-registration/application/dto/user-register.dto';
-import { UserRegisterUserEntity } from '../../domain/entities/user-register-user.entity';
-import { BaseUserEntity } from '@src/common/shared/domain/entities/base-user.entity';
-import { UserUpdateDto } from '../../application/dto/user-update.dto';
+import { UserRegisterUserEntity } from '@user-registration/domain/entities/user-register-user.entity';
+import { UserUpdateDto } from '@user-registration/application/dto/user-update.dto';
 
 @Injectable()
 export class UserRepositoryImpl

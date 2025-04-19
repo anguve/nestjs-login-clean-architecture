@@ -12,8 +12,7 @@ export class VOPassword extends VOBaseString {
   }
 
   private isValidPassword(password: string): boolean {
-    const passwordRegex = /^\d+$/;
-    //const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     return passwordRegex.test(password);
   }
 }

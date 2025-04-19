@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 import { Injectable } from '@nestjs/common';
 import { IJwtServicePort } from '@common/shared/domain/ports/jwt-service.port';
-import { validatedEnvVars } from '../../config/envs';
+import { validatedEnvVars } from '@common/shared/infrastructure/config/envs';
 
 @Injectable()
 export class JwtAdapter implements IJwtServicePort {

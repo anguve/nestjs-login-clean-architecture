@@ -1,7 +1,6 @@
+import { join } from 'path';
 import { registerAs } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { join } from 'path';
-
 import { validatedEnvVars } from '@common/shared/infrastructure/config/envs';
 import { UserModel } from '@common/shared/infrastructure/database/models/user.model';
 

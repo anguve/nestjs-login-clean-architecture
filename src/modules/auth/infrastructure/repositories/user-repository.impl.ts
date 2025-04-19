@@ -4,8 +4,8 @@ import { Repository } from 'typeorm';
 import { UserModel } from '@common/shared/infrastructure/database/models/user.model';
 import { IUserRepository } from '@auth/domain/repositories/user-repository.interface';
 import { BaseRepository } from '@common/shared/infrastructure/database/repositories/base-repository';
-import { LoginUserEntity } from '../../domain/entities/login-user.entity';
-import { BaseUserEntity } from '@src/common/shared/domain/entities/base-user.entity';
+import { LoginUserEntity } from '@auth/domain/entities/login-user.entity';
+import { BaseUserEntity } from '@common/shared/domain/entities/base-user.entity';
 
 @Injectable()
 export class UserRepositoryImpl

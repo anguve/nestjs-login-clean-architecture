@@ -6,7 +6,7 @@ import {
 } from '@user-registration/domain/repositories/user-repository.interface';
 import { UnauthorizedDomainException } from '@common/shared/domain/errors/unauthorized-domain.exception';
 
-import { UserGetAllPort } from '../ports/user-get-all.port';
+import { UserGetAllPort } from '@user-registration/application/ports/user-get-all.port';
 
 @Injectable()
 export class UserGetAllUseCase implements UserGetAllPort {
