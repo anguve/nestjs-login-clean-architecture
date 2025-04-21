@@ -52,7 +52,7 @@ export class SecurityInjectionDetectorMiddleware implements NestMiddleware {
 
       attackChecks.forEach(({ check, message }) => {
         if (check(partValue)) {
-          throw new UnauthorizedDomainException(message);
+          throw new UnauthorizedDomainException(message, '!todo');
         }
       });
     });

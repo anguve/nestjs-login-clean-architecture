@@ -48,6 +48,7 @@ export class UserSearchUseCase implements UserSearchPort {
 
     if (!response?.length) {
       throw new UnauthorizedDomainException(
+        'No se encontró ningún usuario con esos criterios',
         'No se encontró ningún usuario con esos criterios'
       );
     }

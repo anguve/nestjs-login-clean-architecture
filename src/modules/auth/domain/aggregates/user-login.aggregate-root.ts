@@ -14,22 +14,18 @@ export class UserLoginAggregateRoot extends AggregateRootBase<VOUuid> {
     this.password = new VOPassword(props.password);
   }
 
-  public toPrimitives(): IPrimitivesLogin {
-    return {
-      email: this.getEmail() ?? '',
-      password: this.getPassword() ?? ''
-    };
-  }
-
-  public getId(): string {
-    return this.id.value;
-  }
-
   public getPassword(): string {
     return this.password.value;
   }
 
   public getEmail(): string {
     return this.email.value;
+  }
+
+  public toPrimitives(): IPrimitivesLogin {
+    return {
+      email: this.getEmail() ?? '',
+      password: this.getPassword() ?? ''
+    };
   }
 }

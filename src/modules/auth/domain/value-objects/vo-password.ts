@@ -3,7 +3,6 @@ import { VOBaseString } from '@common/shared/domain/value-objects/vo-base-string
 export class VOPassword extends VOBaseString {
   constructor(password: string) {
     super(password);
-    console.log(password);
 
     if (!this.isValidPassword(password)) {
       throw new Error(

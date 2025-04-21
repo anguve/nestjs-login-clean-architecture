@@ -37,7 +37,8 @@ export class UserGetByIdUseCase implements UserGetByIdPort {
     const response = await this.userRepository.getById(userPrimitives);
     if (!response) {
       throw new UnauthorizedDomainException(
-        'Algo salio mal obteniendo el usuario'
+        'Algo salio mal en la creación del usuario',
+        'Algo salio mal en la creación del usuario2'
       );
     }
     return response;

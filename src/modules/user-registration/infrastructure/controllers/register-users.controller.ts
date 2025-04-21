@@ -1,9 +1,16 @@
+import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { BaseResponseDto } from '@common/shared/dto/base-response.dto';
 import { BaseController } from '@common/shared/infrastructure/controller/base.controller';
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { UserDeleteDto } from '@user-registration/application/dto/user-delete.dto';
 import { UserRegisterDto } from '@user-registration/application/dto/user-register.dto';
 import { UserSearchDto } from '@user-registration/application/dto/user-search.dto';
+import { UserDeleteResponse } from '@user-registration/application/types/user-delete-response';
+import { UserRegisterResponse } from '@user-registration/application/types/user-register-response';
+import { UserSearchResponse } from '@user-registration/application/types/user-search-response';
+import { UserUpdateDto } from '@user-registration/application/dto/user-update.dto';
+import { UserUpdateResponse } from '@user-registration/application/types/user-update-response';
+import { UserGetByIdDto } from '@user-registration/application/dto/user-get-by-id.dto';
+import { UserGetByIdResponse } from '@user-registration/application/types/user-get-by-id-response';
 import {
   USER_DELETE_PORT,
   UserDeletePort
@@ -28,13 +35,6 @@ import {
   USER_UPDATE_PORT,
   UserUpdatePort
 } from '@user-registration/application/ports/user-update.port';
-import { UserDeleteResponse } from '@user-registration/application/types/user-delete-response';
-import { UserRegisterResponse } from '@user-registration/application/types/user-register-response';
-import { UserSearchResponse } from '@user-registration/application/types/user-search-response';
-import { UserUpdateDto } from '@user-registration/application/dto/user-update.dto';
-import { UserUpdateResponse } from '@user-registration/application/types/user-update-response';
-import { UserGetByIdDto } from '@user-registration/application/dto/user-get-by-id.dto';
-import { UserGetByIdResponse } from '@user-registration/application/types/user-get-by-id-response';
 
 @Controller('api/users')
 export class RegisterUsersController extends BaseController {

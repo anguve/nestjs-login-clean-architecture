@@ -30,6 +30,7 @@ export class UserUpdateUseCase implements UserUpdatePort {
     const response = await this.userRepository.updateUser(userPrimitives);
     if (!response) {
       throw new UnauthorizedDomainException(
+        'Algo salio mal en la creación del usuario',
         'Algo salio mal en la creación del usuario'
       );
     }

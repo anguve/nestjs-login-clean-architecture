@@ -1,10 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { NotFoundDomainException } from '@common/shared/domain/errors/not-found-domain.exception';
-import { UnauthorizedDomainException } from '@common/shared/domain/errors/unauthorized-domain.exception';
 import {
-  I_JWT_SERVICE_PORT,
-  IJwtServicePort
-} from '@common/shared/domain/ports/jwt-service.port';
+  I_PASSWORD_HASHER_PORT,
+  IPasswordHasherPort
+} from '@common/shared/domain/ports/password-hasher.port';
+import {
+  I_TOKEN_GENERATOR_PORT,
+  ITokenGeneratorPort
+} from '@common/shared/domain/ports/token-generator.port';
 import { LoginPort } from '@auth/application/ports/login.port';
 import { LoginUserDto } from '@auth/application/dto/login-user.dto';
 import { LoginResponse } from '@auth/application/types/login-response';
@@ -15,62 +18,45 @@ import {
   IUserRepository
 } from '@auth/domain/repositories/user-repository.interface';
 import {
-  I_PASSWORD_HASHER_PORT,
-  IPasswordHasherPort
-} from '@common/shared/domain/ports/password-hasher.port';
+  I_PASSWORD_VERIFIER_PORT,
+  IPasswordVerifierPort
+} from '@auth/domain/port/password-verifier.port';
+import { INVALID_CREDENTIALS_MESSAGE } from '@src/common/shared/constants/messages';
 
 @Injectable()
 export class LoginUserUseCase implements LoginPort {
   constructor(
     @Inject(I_USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
-    @Inject(I_JWT_SERVICE_PORT)
-    private readonly jwtServicePort: IJwtServicePort,
     @Inject(I_PASSWORD_HASHER_PORT)
-    private readonly passwordHasherPort: IPasswordHasherPort
+    private readonly passwordHasherPort: IPasswordHasherPort,
+    @Inject(I_PASSWORD_VERIFIER_PORT)
+    private readonly passwordVerifierPort: IPasswordVerifierPort,
+    @Inject(I_TOKEN_GENERATOR_PORT)
+    private readonly tokenGeneratorPort: ITokenGeneratorPort
   ) {}
 
   async execute(data: LoginUserDto): Promise<LoginResponse> {
-    const loginAggregate = new UserLoginAggregateRoot(data);
-    const user = await this.findUserByEmail(loginAggregate.getEmail());
-    this.validateUser(user);
-    this.ensurePasswordIsValid(
-      loginAggregate.toPrimitives().password,
+    const agg = new UserLoginAggregateRoot(data);
+    const user = await this.findUserByEmail(agg.getEmail());
+    user.canLogin();
+    await this.passwordVerifierPort.verify(
+      agg.getPassword(),
       user.password ?? ''
     );
-    const token = await this.generateJwt(user);
-    return { token: this.passwordHasherPort.to(token) };
-  }
+    const token = await this.tokenGeneratorPort.generate(user.id ?? '');
 
-  private validateUser(user: LoginUserEntity): void {
-    if (!user.isActive || user.isDeleted) {
-      throw new NotFoundDomainException('Usuario no válido');
-    }
+    return { token: this.passwordHasherPort.to(token) };
   }
 
   private async findUserByEmail(email: string): Promise<LoginUserEntity> {
     const user = await this.userRepository.findByEmail(email);
     if (!user) {
-      throw new NotFoundDomainException('Usuario no válido');
+      throw new NotFoundDomainException(
+        INVALID_CREDENTIALS_MESSAGE,
+        INVALID_CREDENTIALS_MESSAGE
+      );
     }
     return user;
-  }
-
-  private ensurePasswordIsValid(
-    inputPassword: string,
-    storedPassword: string
-  ): void {
-    if (inputPassword !== storedPassword) {
-      throw new UnauthorizedDomainException('Contraseña inválida');
-    }
-  }
-
-  private async generateJwt(user: LoginUserEntity): Promise<string> {
-    return this.jwtServicePort.sign({
-      id: user.id,
-      name: user.name,
-      lastName: user.lastName,
-      email: user.email
-    });
   }
 }

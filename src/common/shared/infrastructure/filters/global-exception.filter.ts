@@ -26,9 +26,9 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     console.error('❌ Error:', exception);
     if (exception instanceof BaseDomainException) {
       response.status(HttpStatus.BAD_REQUEST).json({
-        statusCode: HttpStatus.BAD_REQUEST,
+        success: false,
         message: exception.message,
-        errorCode: exception.errorCode
+        data: {}
       });
     } else if (exception instanceof HttpException) {
       const status = exception.getStatus();
@@ -37,16 +37,16 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       response.status(status).json(
         typeof res === 'string'
           ? {
-              statusCode: status,
+              success: false,
               message: res
             }
           : res
       );
     } else {
       response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
         message: 'Internal server error',
-        errorCode: 'INTERNAL_ERROR'
+        data: {}
       });
     }
   }

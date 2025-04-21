@@ -32,7 +32,8 @@ export class UserDeleteUseCase implements UserDeletePort {
     });
     if (!response) {
       throw new UnauthorizedDomainException(
-        'Algo salio mal en la creación del usuario'
+        'Algo salio mal en la creación del usuario',
+        'Algo salio mal en la creación del usuario2'
       );
     }
   }

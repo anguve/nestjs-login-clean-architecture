@@ -1,124 +1,52 @@
+import { BaseUserEntityProps } from '@common/shared/domain/interfaces/base-user-entity.interface';
+
 export class BaseUserEntity {
-  private constructor(
-    private readonly _id?: string,
-    private readonly _name?: string,
-    private readonly _lastName?: string,
-    private readonly _email?: string,
-    private readonly _password?: string,
-    private readonly _isActive?: boolean,
-    private readonly _isDeleted?: boolean,
-    private readonly _createdAt?: Date,
-    private readonly _updatedAt?: Date
-  ) {}
-
-  static withPassword({
-    id,
-    name,
-    lastName,
-    email,
-    password,
-    isActive,
-    isDeleted,
-    createdAt,
-    updatedAt
-  }: {
-    id: string;
-    name: string;
-    lastName: string;
-    email: string;
-    password: string;
-    isActive?: boolean;
-    isDeleted?: boolean;
-    createdAt?: Date;
-    updatedAt?: Date;
-  }): BaseUserEntity {
-    return new BaseUserEntity(
-      id,
-      name,
-      lastName,
-      email,
-      password,
-      isActive,
-      isDeleted,
-      createdAt,
-      updatedAt
-    );
-  }
-
-  static createEmptyUserEntity(): BaseUserEntity {
-    return new BaseUserEntity();
-  }
-
-  static withoutPassword({
-    id,
-    name,
-    lastName,
-    email,
-    isActive,
-    isDeleted,
-    createdAt,
-    updatedAt
-  }: {
-    id: string;
-    name: string;
-    lastName: string;
-    email: string;
-    isActive?: boolean;
-    isDeleted?: boolean;
-    createdAt?: Date;
-    updatedAt?: Date;
-  }): BaseUserEntity {
-    return new BaseUserEntity(
-      id,
-      name,
-      lastName,
-      email,
-      undefined,
-      isActive,
-      isDeleted,
-      createdAt,
-      updatedAt
-    );
-  }
+  protected constructor(private readonly props: BaseUserEntityProps) {}
 
   get id(): string | undefined {
-    return this._id;
+    return this.props.id;
   }
 
   get name(): string | undefined {
-    return this._name;
+    return this.props.name;
   }
 
   get lastName(): string | undefined {
-    return this._lastName;
+    return this.props.lastName;
   }
 
   get email(): string | undefined {
-    return this._email;
+    return this.props.email;
   }
 
   get password(): string | undefined {
-    return this._password;
+    return this.props.password;
   }
 
   get isActive(): boolean | undefined {
-    return this._isActive;
+    return this.props.isActive;
   }
 
   get isDeleted(): boolean | undefined {
-    return this._isDeleted;
+    return this.props.isDeleted;
   }
 
   get createdAt(): Date | undefined {
-    return this._createdAt;
+    return this.props.createdAt;
   }
 
   get updatedAt(): Date | undefined {
-    return this._updatedAt;
+    return this.props.updatedAt;
   }
 
   get fullName(): string | undefined {
-    return `${this._name} ${this._lastName}`;
+    return `${this.name ?? ''} ${this.lastName ?? ''}`.trim();
+  }
+
+  canLogin(): void {
+    if (!this.isActive || this.isDeleted) {
+      throw new Error('Usuario no válido');
+    }
   }
 
   toJSON() {

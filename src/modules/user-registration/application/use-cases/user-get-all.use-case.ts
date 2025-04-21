@@ -26,7 +26,8 @@ export class UserGetAllUseCase implements UserGetAllPort {
     const response = await this.userRepository.getAll();
     if (!response) {
       throw new UnauthorizedDomainException(
-        'Algo salio mal en la creación del usuario'
+        'Algo salio mal en la creación del usuario',
+        'Algo salio mal en la creación del usuario2'
       );
     }
     return response;

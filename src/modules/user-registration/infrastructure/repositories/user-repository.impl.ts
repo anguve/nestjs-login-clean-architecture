@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, Repository } from 'typeorm';
 import { UserModel } from '@common/shared/infrastructure/database/models/user.model';
-import { BaseUserEntity } from '@common/shared/domain/entities/base-user.entity';
 import { BaseRepository } from '@common/shared/infrastructure/database/repositories/base-repository';
 import { IUserRepository } from '@user-registration/domain/repositories/user-repository.interface';
 import { UserRegisterDto } from '@user-registration/application/dto/user-register.dto';
@@ -23,7 +22,7 @@ export class UserRepositoryImpl
 
   async save(data: UserRegisterDto): Promise<UserRegisterUserEntity> {
     await this.create(data);
-    return new UserRegisterUserEntity(BaseUserEntity.createEmptyUserEntity());
+    return new UserRegisterUserEntity({});
   }
 
   async getAll(): Promise<UserRegisterUserEntity[]> {
@@ -31,18 +30,16 @@ export class UserRepositoryImpl
 
     return models.map(
       (model) =>
-        new UserRegisterUserEntity(
-          BaseUserEntity.withoutPassword({
-            id: model.id,
-            name: model.name,
-            lastName: model.lastName,
-            email: model.email,
-            isActive: model.isActive,
-            isDeleted: model.isDeleted,
-            createdAt: model.createdAt,
-            updatedAt: model.updatedAt
-          })
-        )
+        new UserRegisterUserEntity({
+          id: model.id,
+          name: model.name,
+          lastName: model.lastName,
+          email: model.email,
+          isActive: model.isActive,
+          isDeleted: model.isDeleted,
+          createdAt: model.createdAt,
+          updatedAt: model.updatedAt
+        })
     );
   }
 
@@ -51,23 +48,21 @@ export class UserRepositoryImpl
     if (!model) {
       return null;
     }
-    return new UserRegisterUserEntity(
-      BaseUserEntity.withoutPassword({
-        id: model.id,
-        name: model.name,
-        lastName: model.lastName,
-        email: model.email,
-        isActive: model.isActive,
-        isDeleted: model.isDeleted,
-        createdAt: model.createdAt,
-        updatedAt: model.updatedAt
-      })
-    );
+    return new UserRegisterUserEntity({
+      id: model.id,
+      name: model.name,
+      lastName: model.lastName,
+      email: model.email,
+      isActive: model.isActive,
+      isDeleted: model.isDeleted,
+      createdAt: model.createdAt,
+      updatedAt: model.updatedAt
+    });
   }
 
   async updateUser(data: UserUpdateDto): Promise<UserRegisterUserEntity> {
     await this.update(data.id, data);
-    return new UserRegisterUserEntity(BaseUserEntity.createEmptyUserEntity());
+    return new UserRegisterUserEntity({});
   }
 
   async deleteUser(
@@ -75,7 +70,7 @@ export class UserRepositoryImpl
     data: { isActive: boolean }
   ): Promise<UserRegisterUserEntity> {
     await this.update(id, data);
-    return new UserRegisterUserEntity(BaseUserEntity.createEmptyUserEntity());
+    return new UserRegisterUserEntity({});
   }
 
   async searchUser(
@@ -84,18 +79,16 @@ export class UserRepositoryImpl
     const models = await this.search(options);
     return models.map(
       (model) =>
-        new UserRegisterUserEntity(
-          BaseUserEntity.withoutPassword({
-            id: model.id,
-            name: model.name,
-            lastName: model.lastName,
-            email: model.email,
-            isActive: model.isActive,
-            isDeleted: model.isDeleted,
-            createdAt: model.createdAt,
-            updatedAt: model.updatedAt
-          })
-        )
+        new UserRegisterUserEntity({
+          id: model.id,
+          name: model.name,
+          lastName: model.lastName,
+          email: model.email,
+          isActive: model.isActive,
+          isDeleted: model.isDeleted,
+          createdAt: model.createdAt,
+          updatedAt: model.updatedAt
+        })
     );
   }
 }

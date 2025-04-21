@@ -30,7 +30,8 @@ export class UserRegisterUseCase implements UserRegisterPort {
     const response = await this.userRepository.save(data);
     if (!response) {
       throw new UnauthorizedDomainException(
-        'Algo salio mal en la creación del usuario'
+        'Algo salio mal en la creación del usuario',
+        'Algo salio mal en la creación del usuario2'
       );
     }
   }

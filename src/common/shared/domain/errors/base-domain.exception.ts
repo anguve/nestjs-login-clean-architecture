@@ -1,10 +1,10 @@
 export class BaseDomainException extends Error {
-  public readonly errorCode: string;
+  public readonly logMessage: string;
 
-  constructor(message: string, errorCode = 'DOMAIN_ERROR') {
+  constructor(message: string, logMessage: string) {
     super(message);
     this.name = this.constructor.name;
-    this.errorCode = errorCode;
+    this.logMessage = logMessage;
 
     Error.captureStackTrace?.(this, this.constructor);
   }

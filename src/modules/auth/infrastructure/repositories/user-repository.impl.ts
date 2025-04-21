@@ -5,7 +5,6 @@ import { UserModel } from '@common/shared/infrastructure/database/models/user.mo
 import { IUserRepository } from '@auth/domain/repositories/user-repository.interface';
 import { BaseRepository } from '@common/shared/infrastructure/database/repositories/base-repository';
 import { LoginUserEntity } from '@auth/domain/entities/login-user.entity';
-import { BaseUserEntity } from '@common/shared/domain/entities/base-user.entity';
 
 @Injectable()
 export class UserRepositoryImpl
@@ -26,16 +25,11 @@ export class UserRepositoryImpl
       return null;
     }
 
-    return new LoginUserEntity(
-      BaseUserEntity.withPassword({
-        id: model.id,
-        name: model.name,
-        lastName: model.lastName,
-        email: model.email,
-        password: model.password,
-        isActive: model.isActive,
-        isDeleted: model.isDeleted
-      })
-    );
+    return new LoginUserEntity({
+      id: model.id,
+      password: model.password,
+      isActive: model.isActive,
+      isDeleted: model.isDeleted
+    });
   }
 }
