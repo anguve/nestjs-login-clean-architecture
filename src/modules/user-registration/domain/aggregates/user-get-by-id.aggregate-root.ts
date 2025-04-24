@@ -1,6 +1,6 @@
 import { AggregateRootBase } from '@common/shared/domain/aggregate-root.base';
 
-import { VOUuid } from '@user-registration/domain/value-objects/vo-uuid';
+import { VOUuid } from '@common/shared/domain/value-objects/vo-uuid';
 
 export class UserGetByIdAggregateRoot extends AggregateRootBase<VOUuid> {
   constructor(props: { id: string }) {

@@ -1,16 +1,9 @@
 import { VOBaseString } from '@common/shared/domain/value-objects/vo-base-string';
 
 export class VOName extends VOBaseString {
+  private static readonly MAX_LENGTH = 150;
+  private static readonly NAME_REGEX = /^[a-zA-Z\s'-]+$/;
   constructor(name: string) {
-    super(name);
-
-    if (!this.isValidName(name)) {
-      throw new Error('El nombre no es válido.');
-    }
-  }
-
-  private isValidName(name: string): boolean {
-    const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s'-]{2,}$/;
-    return nameRegex.test(name.trim());
+    super(name, 'Name', VOName.MAX_LENGTH, VOName.NAME_REGEX);
   }
 }

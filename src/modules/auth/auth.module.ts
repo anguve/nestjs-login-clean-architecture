@@ -6,14 +6,14 @@ import { I_JWT_SERVICE_PORT } from '@common/shared/domain/ports/jwt-service.port
 import { JwtAdapter } from '@common/shared/infrastructure/adapters/security/jwt.adapter';
 import { DatabaseEncryptionTransformer } from '@common/shared/infrastructure/transformers/database-encryption.transformer';
 import { validatedEnvVars } from '@common/shared/infrastructure/config/envs';
+import { I_TOKEN_GENERATOR_PORT } from '@common/shared/domain/ports/token-generator.port';
+import { TokenService } from '@common/shared/application/service/token.service';
 import { PasswordVerifierService } from '@auth/domain/services/password-verifier.service';
-import { TokenService } from '@src/common/shared/application/service/token.service';
 import { AuthController } from '@auth/infrastructure/controllers/auth.controller';
 import { LoginUserUseCase } from '@auth/application/use-cases/login-user.use-case';
 import { LOGIN_PORT } from '@auth/application/ports/login.port';
 import { I_USER_REPOSITORY } from '@auth/domain/repositories/user-repository.interface';
 import { UserRepositoryImpl } from '@auth/infrastructure/repositories/user-repository.impl';
-import { I_TOKEN_GENERATOR_PORT } from '@src/common/shared/domain/ports/token-generator.port';
 import { I_PASSWORD_VERIFIER_PORT } from '@auth/domain/port/password-verifier.port';
 
 @Module({

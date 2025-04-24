@@ -1,11 +1,11 @@
 export class BaseResponseDto<T> {
-  success: boolean;
   message: string;
+  success: boolean;
   data?: T;
 
   constructor(data?: T, message = '') {
-    this.success = true;
     this.message = message;
+    this.success = true;
     this.data = data;
   }
 }

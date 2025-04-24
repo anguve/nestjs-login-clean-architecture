@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { BaseRepository } from '@common/shared/infrastructure/database/repositories/base-repository';
 import { UserModel } from '@common/shared/infrastructure/database/models/user.model';
 import { IUserRepository } from '@auth/domain/repositories/user-repository.interface';
-import { BaseRepository } from '@common/shared/infrastructure/database/repositories/base-repository';
 import { LoginUserEntity } from '@auth/domain/entities/login-user.entity';
 
 @Injectable()

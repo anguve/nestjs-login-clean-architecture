@@ -3,7 +3,7 @@ import {
   IJwtServicePort,
   I_JWT_SERVICE_PORT
 } from '@common/shared/domain/ports/jwt-service.port';
-import { ITokenGeneratorPort } from '@src/common/shared/domain/ports/token-generator.port';
+import { ITokenGeneratorPort } from '@common/shared/domain/ports/token-generator.port';
 
 @Injectable()
 export class TokenService implements ITokenGeneratorPort {

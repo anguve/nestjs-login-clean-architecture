@@ -6,7 +6,6 @@ import { validatedEnvVars } from '@common/shared/infrastructure/config/envs';
 import { LoginUserDto } from '@auth/application/dto/login-user.dto';
 import { LOGIN_PORT, LoginPort } from '@auth/application/ports/login.port';
 import { LoginResponse } from '@auth/application/types/login-response';
-import { LOGIN_SUCCESS_MESSAGE } from '@auth/infrastructure/constants/messages.constants';
 
 @Controller('api/auth')
 export class AuthController extends BaseController {
@@ -28,6 +27,6 @@ export class AuthController extends BaseController {
       maxAge: 1000 * 60 * 60
     });
 
-    return this.createResponse({}, LOGIN_SUCCESS_MESSAGE);
+    return this.createResponse({}, 'Login successful');
   }
 }

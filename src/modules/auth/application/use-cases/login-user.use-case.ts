@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { NotFoundDomainException } from '@common/shared/domain/errors/not-found-domain.exception';
 import {
   I_PASSWORD_HASHER_PORT,
   IPasswordHasherPort
@@ -21,7 +20,8 @@ import {
   I_PASSWORD_VERIFIER_PORT,
   IPasswordVerifierPort
 } from '@auth/domain/port/password-verifier.port';
-import { INVALID_CREDENTIALS_MESSAGE } from '@src/common/shared/constants/messages';
+import { INVALID_CREDENTIALS_MESSAGE } from '@common/shared/constants/messages';
+import { UnauthorizedDomainException } from '@common/shared/domain/errors/unauthorized-domain.exception';
 
 @Injectable()
 export class LoginUserUseCase implements LoginPort {
@@ -52,7 +52,7 @@ export class LoginUserUseCase implements LoginPort {
   private async findUserByEmail(email: string): Promise<LoginUserEntity> {
     const user = await this.userRepository.findByEmail(email);
     if (!user) {
-      throw new NotFoundDomainException(
+      throw new UnauthorizedDomainException(
         INVALID_CREDENTIALS_MESSAGE,
         INVALID_CREDENTIALS_MESSAGE
       );

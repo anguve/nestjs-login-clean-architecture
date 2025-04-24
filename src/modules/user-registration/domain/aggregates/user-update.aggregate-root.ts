@@ -1,8 +1,8 @@
 import { AggregateRootBase } from '@common/shared/domain/aggregate-root.base';
-import { VOEmail } from '@user-registration/domain/value-objects/vo-email';
+import { VOEmail } from '@common/shared/domain/value-objects/vo-email';
 import { VOName } from '@user-registration/domain/value-objects/vo-name';
 import { VOLastName } from '@user-registration/domain/value-objects/vo-last-name';
-import { VOUuid } from '@user-registration/domain/value-objects/vo-uuid';
+import { VOUuid } from '@common/shared/domain/value-objects/vo-uuid';
 import { IPrimitivesUpdate } from '@user-registration/domain/interfaces/primitives-update.interface';
 
 export class UserUpdateAggregateRoot extends AggregateRootBase<VOUuid> {
