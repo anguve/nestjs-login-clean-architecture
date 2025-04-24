@@ -25,10 +25,10 @@ export class GlobalExceptionFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-    /*   const request = ctx.getRequest<Request>(); */
+    const request = ctx.getRequest<Request>();
 
     // Log the error
-    /*     this.logError(exception, request); */
+    this.logError(exception, request);
 
     // Handle different types of exceptions
     if (exception instanceof BaseDomainException) {
@@ -40,12 +40,12 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     }
   }
 
-  /*   private logError(exception: unknown, request: Request): void {
+  private logError(exception: unknown, request: Request): void {
     console.error('🔥 Global exception caught:', exception);
     console.error('📍 Endpoint:', `${request.method} ${request.url}`);
     console.error('🧾 Body:', JSON.stringify(request.body, null, 2));
     console.error('❌ Error:', exception);
-  } */
+  }
 
   private sendResponse(
     response: Response,

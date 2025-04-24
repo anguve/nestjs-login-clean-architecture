@@ -50,4 +50,11 @@ import { I_PASSWORD_VERIFIER_PORT } from '@auth/domain/port/password-verifier.po
     }
   ]
 })
-export class AuthModule {}
+export class AuthModule {
+  /**
+   * AuthModule is currently empty by design.
+   * This placeholder module is required by the framework and
+   * will be extended with providers, controllers, and exports
+   * in future implementations.
+   */
+}

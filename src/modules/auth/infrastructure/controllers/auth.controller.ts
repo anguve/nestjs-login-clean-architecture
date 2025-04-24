@@ -9,10 +9,22 @@ import { LoginResponse } from '@auth/application/types/login-response';
 
 @Controller('api/auth')
 export class AuthController extends BaseController {
+  /**
+   * Constructor that injects the login port.
+   * @param loginPort Implementation of the login use case port.
+   */
   constructor(@Inject(LOGIN_PORT) private readonly loginPort: LoginPort) {
     super();
   }
-
+  /**
+   * Handles user login requests.
+   *
+   * Validates user credentials and returns an access token as an HTTP-only cookie.
+   *
+   * @param data - The login data transfer object containing user credentials.
+   * @param res - Express Response object to set the authentication cookie.
+   * @returns A BaseResponseDto wrapping a LoginResponse with login status.
+   */
   @Post('login/v1')
   async login(
     @Body() data: LoginUserDto,

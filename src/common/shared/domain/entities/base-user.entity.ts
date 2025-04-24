@@ -43,12 +43,6 @@ export class BaseUserEntity {
     return `${this.name ?? ''} ${this.lastName ?? ''}`.trim();
   }
 
-  canLogin(): void {
-    if (!this.isActive || this.isDeleted) {
-      throw new Error('Usuario no válido');
-    }
-  }
-
   toJSON() {
     return {
       id: this.id,

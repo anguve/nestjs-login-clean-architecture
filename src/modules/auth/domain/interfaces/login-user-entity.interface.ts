@@ -2,5 +2,5 @@ import { BaseUserEntityProps } from '@common/shared/domain/interfaces/base-user-
 
 export type LoginUserEntityProps = Pick<
   BaseUserEntityProps,
-  'id' | 'password' | 'isActive' | 'isDeleted'
+  'id' | 'email' | 'password' | 'isActive' | 'isDeleted'
 >;

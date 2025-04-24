@@ -25,6 +25,14 @@ import { UnauthorizedDomainException } from '@common/shared/domain/errors/unauth
 
 @Injectable()
 export class LoginUserUseCase implements LoginPort {
+  /**
+   * Creates an instance of LoginUserUseCase.
+   *
+   * @param userRepository - Repository to access user data.
+   * @param passwordHasherPort - Port to hash and transform tokens.
+   * @param passwordVerifierPort - Port to verify plain password against stored hash.
+   * @param tokenGeneratorPort - Port to generate authentication tokens.
+   */
   constructor(
     @Inject(I_USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
@@ -35,7 +43,12 @@ export class LoginUserUseCase implements LoginPort {
     @Inject(I_TOKEN_GENERATOR_PORT)
     private readonly tokenGeneratorPort: ITokenGeneratorPort
   ) {}
-
+  /**
+   * Executes the login process.
+   * @param data LoginUserDto containing user email and password.
+   * @returns Promise<LoginResponse> with the generated access token.
+   * @throws UnauthorizedDomainException if user is not found or credentials are invalid.
+   */
   async execute(data: LoginUserDto): Promise<LoginResponse> {
     const agg = new UserLoginAggregateRoot(data);
     const user = await this.findUserByEmail(agg.getEmail());
@@ -48,13 +61,20 @@ export class LoginUserUseCase implements LoginPort {
 
     return { token: this.passwordHasherPort.to(token) };
   }
-
+  /**
+   * Finds a user entity by email in the repository.
+   * @param email The user's email address.
+   * @returns Promise<LoginUserEntity> found user entity.
+   * @throws UnauthorizedDomainException if no user is found with the given email.
+   */
   private async findUserByEmail(email: string): Promise<LoginUserEntity> {
     const user = await this.userRepository.findByEmail(email);
+
     if (!user) {
+      const technicalDetails = `No user found with email: ${email}.`;
       throw new UnauthorizedDomainException(
         INVALID_CREDENTIALS_MESSAGE,
-        INVALID_CREDENTIALS_MESSAGE
+        technicalDetails
       );
     }
     return user;
