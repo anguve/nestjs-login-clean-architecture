@@ -13,10 +13,8 @@ export class PasswordVerifierService implements IPasswordVerifierPort {
    */
   async verify(plain: string, stored: string): Promise<void> {
     if (plain !== stored) {
-      throw new UnauthorizedDomainException(
-        INVALID_CREDENTIALS_MESSAGE,
-        INVALID_CREDENTIALS_MESSAGE
-      );
+      const userMessage = INVALID_CREDENTIALS_MESSAGE;
+      throw new UnauthorizedDomainException(userMessage, userMessage);
     }
   }
 }

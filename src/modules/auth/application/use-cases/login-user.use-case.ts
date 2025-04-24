@@ -42,7 +42,10 @@ export class LoginUserUseCase implements LoginPort {
     private readonly passwordVerifierPort: IPasswordVerifierPort,
     @Inject(I_TOKEN_GENERATOR_PORT)
     private readonly tokenGeneratorPort: ITokenGeneratorPort
-  ) {}
+  ) {
+    // Empty constructor: dependencies are injected here.
+    // No additional logic is executed to keep single responsibility.
+  }
   /**
    * Executes the login process.
    * @param data LoginUserDto containing user email and password.
@@ -71,11 +74,9 @@ export class LoginUserUseCase implements LoginPort {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
+      const userMessage = INVALID_CREDENTIALS_MESSAGE;
       const technicalDetails = `No user found with email: ${email}.`;
-      throw new UnauthorizedDomainException(
-        INVALID_CREDENTIALS_MESSAGE,
-        technicalDetails
-      );
+      throw new UnauthorizedDomainException(userMessage, technicalDetails);
     }
     return user;
   }

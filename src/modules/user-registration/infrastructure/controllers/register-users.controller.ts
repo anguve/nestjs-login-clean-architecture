@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
 import { BaseResponseDto } from '@common/shared/dto/base-response.dto';
 import { BaseController } from '@common/shared/infrastructure/controller/base.controller';
 import { UserDeleteDto } from '@user-registration/application/dto/user-delete.dto';
@@ -11,6 +11,7 @@ import { UserUpdateDto } from '@user-registration/application/dto/user-update.dt
 import { UserUpdateResponse } from '@user-registration/application/types/user-update-response';
 import { UserGetByIdDto } from '@user-registration/application/dto/user-get-by-id.dto';
 import { UserGetByIdResponse } from '@user-registration/application/types/user-get-by-id-response';
+import { UserGetAllResponse } from '@user-registration/application/types/user-get-all-response';
 import {
   USER_DELETE_PORT,
   UserDeletePort
@@ -54,11 +55,26 @@ export class RegisterUsersController extends BaseController {
   ) {
     super();
   }
-
+  /**
+   * Get a paginated list of users.
+   *
+   * This endpoint retrieves all users with pagination support.
+   * Query parameters `page` and `limit` are optional and default to 1 and 10 respectively.
+   *
+   * @param page - The page number (defaults to '1'). Converted internally to a number.
+   * @param limit - The number of items per page (defaults to '10'). Converted internally to a number.
+   * @returns A `BaseResponseDto` containing a list of users and pagination metadata.
+   */
   @Get('get-all/v1')
-  async getAll(): Promise<BaseResponseDto<UserRegisterResponse>> {
-    const result = await this.userGetAllPort.execute();
-    return this.createResponse(result, 'Usuarios Obtenidos correctamente');
+  async getAll(
+    @Query('page') page: number,
+    @Query('limit') limit: number
+  ): Promise<BaseResponseDto<UserGetAllResponse>> {
+    const result = await this.userGetAllPort.execute(
+      Number(page === 0 ? 1 : page),
+      Number(limit === 0 ? 10 : limit)
+    );
+    return this.createResponse(result, 'Users retrieved successfully');
   }
 
   @Post('get-by-id/v1')
@@ -68,13 +84,18 @@ export class RegisterUsersController extends BaseController {
     const result = await this.userGetByIdPort.execute(data);
     return this.createResponse(result, 'Usuario Obtenido correctamente');
   }
-
-  @Post('created/v1')
+  /**
+   * Handle user registration.
+   *
+   * @param data - User registration data (DTO).
+   * @return A success response with registered user information.
+   */
+  @Post('registered/v1')
   async created(
     @Body() data: UserRegisterDto
   ): Promise<BaseResponseDto<UserRegisterResponse>> {
     const result = await this.userRegisterPort.execute(data);
-    return this.createResponse(result, 'Registro de usuario exitoso');
+    return this.createResponse(result, 'User registration successful');
   }
 
   @Post('updated/v1')

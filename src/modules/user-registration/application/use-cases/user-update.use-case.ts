@@ -14,7 +14,10 @@ export class UserUpdateUseCase implements UserUpdatePort {
   constructor(
     @Inject(I_USER_REGISTER_REPOSITORY)
     private readonly userRepository: IUserRepository
-  ) {}
+  ) {
+    /* Empty constructor: dependencies are injected here.
+     No additional logic is executed to keep single responsibility. */
+  }
 
   async execute(data: UserUpdateDto): Promise<UserUpdateResponse> {
     const userUpdateAggregateRoot = this.buildAggregateRoot(data);

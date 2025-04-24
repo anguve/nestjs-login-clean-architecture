@@ -1,9 +1,8 @@
 import { AggregateRootBase } from '@common/shared/domain/aggregate-root.base';
 import { VOEmail } from '@common/shared/domain/value-objects/vo-email';
+import { VOUuid } from '@common/shared/domain/value-objects/vo-uuid';
 import { VOName } from '@user-registration/domain/value-objects/vo-name';
 import { VOLastName } from '@user-registration/domain/value-objects/vo-last-name';
-import { UserFoundEvent } from '@user-registration/domain/aggregates/events/user-found.event';
-import { VOUuid } from '@common/shared/domain/value-objects/vo-uuid';
 
 export class UserAggregateRoot extends AggregateRootBase<VOUuid> {
   private readonly email?: VOEmail;
@@ -21,12 +20,6 @@ export class UserAggregateRoot extends AggregateRootBase<VOUuid> {
     this.email = props.email ? new VOEmail(props.email) : undefined;
     this.name = props.name ? new VOName(props.name) : undefined;
     this.lastName = props.lastName ? new VOLastName(props.lastName) : undefined;
-  }
-
-  public searchUser(): void {
-    if (this.email || this.name || this.lastName) {
-      this.addDomainEvent(new UserFoundEvent(this));
-    }
   }
 
   public toPrimitives(): Record<string, string | undefined> {

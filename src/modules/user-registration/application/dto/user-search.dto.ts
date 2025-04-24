@@ -1,5 +1,5 @@
 import { IsOptional } from 'class-validator';
-import { BaseUserDto } from './base-user.dto';
+import { BaseUserDto } from '@user-registration/application/dto/base-user.dto';
 
 export class UserSearchDto {
   @IsOptional()

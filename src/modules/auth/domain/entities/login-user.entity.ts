@@ -14,11 +14,9 @@ export class LoginUserEntity extends BaseUserEntity {
    */
   canLogin(): void {
     if (!this.isActive || this.isDeleted) {
+      const userMessage = INVALID_CREDENTIALS_MESSAGE;
       const technicalDetails = `Login denied for user ${this.email} due to status: isActive = ${this.isActive}, isDeleted = ${this.isDeleted}.`;
-      throw new UnauthorizedDomainException(
-        INVALID_CREDENTIALS_MESSAGE,
-        technicalDetails
-      );
+      throw new UnauthorizedDomainException(userMessage, technicalDetails);
     }
   }
 }

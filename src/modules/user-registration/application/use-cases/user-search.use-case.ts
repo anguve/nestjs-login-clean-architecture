@@ -14,7 +14,10 @@ export class UserSearchUseCase implements UserSearchPort {
   constructor(
     @Inject(I_USER_REGISTER_REPOSITORY)
     private readonly userRepository: IUserRepository
-  ) {}
+  ) {
+    /* Empty constructor: dependencies are injected here.
+     No additional logic is executed to keep single responsibility. */
+  }
 
   async execute(data: UserSearchDto): Promise<UserSearchResponse> {
     const userSearchAggregateRoot = this.buildAggregateRoot(data);

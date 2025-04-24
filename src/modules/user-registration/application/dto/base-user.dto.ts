@@ -1,19 +1,19 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class BaseUserDto {
   @IsOptional()
-  @IsString({ message: 'El id debe ser una cadena de texto' })
   id?: string;
 
-  @IsNotEmpty({ message: 'El nombre no puede estar vacío' })
+  @IsNotEmpty({ message: 'The name cannot be empty' })
   name: string;
 
-  @IsNotEmpty({ message: 'El apellido no puede estar vacío' })
+  @IsNotEmpty({ message: 'The last name cannot be empty' })
   lastName: string;
 
-  @IsNotEmpty({ message: 'El correo electrónico es obligatorio' })
+  @IsEmail({}, { message: 'The email must be a valid email address.' })
+  @IsNotEmpty({ message: 'The email cannot be empty.' })
   email: string;
 
-  @IsNotEmpty({ message: 'La contraseña es obligatoria' })
+  @IsNotEmpty({ message: 'The password cannot be empty.' })
   password: string;
 }

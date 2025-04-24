@@ -3,7 +3,7 @@ import { UnauthorizedDomainException } from '@common/shared/domain/errors/unauth
 import { UserDeletePort } from '@user-registration/application/ports/user-delete.port';
 import { UserDeleteResponse } from '@user-registration/application/types/user-delete-response';
 import { UserDeleteDto } from '@user-registration/application/dto/user-delete.dto';
-import { UserAggregateRoot } from '@src/modules/user-registration/domain/aggregates/base-user.aggregate-root';
+import { UserAggregateRoot } from '@user-registration/domain/aggregates/base-user.aggregate-root';
 import {
   I_USER_REGISTER_REPOSITORY,
   IUserRepository
@@ -14,7 +14,10 @@ export class UserDeleteUseCase implements UserDeletePort {
   constructor(
     @Inject(I_USER_REGISTER_REPOSITORY)
     private readonly userRepository: IUserRepository
-  ) {}
+  ) {
+    /* Empty constructor: dependencies are injected here.
+     No additional logic is executed to keep single responsibility. */
+  }
 
   async execute(data: UserDeleteDto): Promise<UserDeleteResponse> {
     const userAggregateRoot = this.buildAggregateRoot(data);

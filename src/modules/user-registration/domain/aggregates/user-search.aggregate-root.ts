@@ -1,8 +1,8 @@
 import { AggregateRootBase } from '@common/shared/domain/aggregate-root.base';
 import { VOEmail } from '@common/shared/domain/value-objects/vo-email';
+import { VOUuid } from '@common/shared/domain/value-objects/vo-uuid';
 import { VOName } from '@user-registration/domain/value-objects/vo-name';
 import { VOLastName } from '@user-registration/domain/value-objects/vo-last-name';
-import { VOUuid } from '@common/shared/domain/value-objects/vo-uuid';
 import { IPrimitivesSearch } from '@user-registration/domain/interfaces/primitives-search.interface';
 
 export class UserSearchAggregateRoot extends AggregateRootBase<VOUuid> {

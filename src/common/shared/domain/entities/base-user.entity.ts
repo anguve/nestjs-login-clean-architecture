@@ -1,7 +1,10 @@
 import { BaseUserEntityProps } from '@common/shared/domain/interfaces/base-user-entity.interface';
 
 export class BaseUserEntity {
-  protected constructor(private readonly props: BaseUserEntityProps) {}
+  protected constructor(private readonly props: BaseUserEntityProps) {
+    // Empty constructor: dependencies are injected here.
+    // No additional logic is executed to keep single responsibility.
+  }
 
   get id(): string | undefined {
     return this.props.id;
