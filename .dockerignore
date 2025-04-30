@@ -1,0 +1,33 @@
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# OS generated files
+.DS_Store
+
+# IDEs and editors
+.idea/
+.vscode/
+
+# dotenv environment variables files
+.env
+.env.local
+.env.development.local
+
+# Temporary files
+*.tmp
+.temp
+
+# Git
+.git/
+
+# Dockerignore file itself (optional)
+.dockerignore
