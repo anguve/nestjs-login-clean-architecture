@@ -1,5 +1,5 @@
 # nestjs-login-clean-architecture# Secure Login API - NestJS + Hexagonal Architecture
-
+# This is for recreational purposes and to show off some of my skills. If you want to continue with the project, there's no problem. It's free.
 This is a basic authentication project (Login + Registration) built with NestJS and structured using **Hexagonal Architecture** principles and **Domain-Driven Design (DDD)**.
 
 ---
