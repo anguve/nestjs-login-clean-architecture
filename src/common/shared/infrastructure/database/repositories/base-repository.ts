@@ -2,17 +2,27 @@ import {
   Repository,
   DeepPartial,
   FindOptionsWhere,
-  ObjectLiteral
+  ObjectLiteral,
+  FindManyOptions
 } from 'typeorm';
-import { IBaseRepositoryPort } from '@common/shared/domain/ports/IBaseRepositoryPort';
 
-export class BaseRepository<T extends ObjectLiteral>
-  implements IBaseRepositoryPort<T>
-{
-  constructor(protected readonly repository: Repository<T>) {}
+export class BaseRepository<T extends ObjectLiteral> {
+  constructor(protected readonly repository: Repository<T>) {
+    // Empty constructor: dependencies are injected here.
+    // No additional logic is executed to keep single responsibility.
+  }
 
-  async findAll(): Promise<T[]> {
-    return this.repository.find();
+  async findAll(
+    page = 1,
+    limit = 10,
+    options?: FindManyOptions<T>
+  ): Promise<[T[], number]> {
+    const response = await this.repository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+      ...options
+    });
+    return response;
   }
 
   async findOneById(id: string): Promise<T | null> {
@@ -36,5 +46,9 @@ export class BaseRepository<T extends ObjectLiteral>
 
   async delete(id: number | string): Promise<void> {
     await this.repository.delete(id);
+  }
+
+  async search(options: FindManyOptions<T>): Promise<T[]> {
+    return this.repository.find(options);
   }
 }

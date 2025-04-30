@@ -1,8 +1,8 @@
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
-import { AuthModule } from './modules/auth/auth.module';
-import { UserRegistrationModule } from './modules/user-registration/register-users.module';
-import { DatabaseModule } from './common/shared/infrastructure/database/database.module';
+import { DatabaseModule } from '@common/shared/infrastructure/database/database.module';
 import { SecurityInjectionDetectorMiddleware } from '@common/shared/infrastructure/security/middlewares/security-injection-detector.middleware';
+import { AuthModule } from '@auth/auth.module';
+import { UserRegistrationModule } from '@src/modules/user-registration/user-registration.module';
 
 @Module({
   imports: [AuthModule, UserRegistrationModule, DatabaseModule],

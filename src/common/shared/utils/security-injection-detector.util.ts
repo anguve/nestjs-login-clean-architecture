@@ -1,4 +1,4 @@
-import { SECURITY_INJECTION_DETECTOR } from '../constants/security-injection-detector';
+import { SECURITY_INJECTION_DETECTOR } from '@common/shared/constants/security-injection-detector';
 
 /**
  * Verifica si un cuerpo de solicitud contiene patrones maliciosos.

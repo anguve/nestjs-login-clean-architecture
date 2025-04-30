@@ -10,7 +10,7 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 
 import { SECURITY_INJECTION_DETECTOR_MESSAGES } from '@common/shared/constants/security-injection-detector-messages';
-import { UnauthorizedDomainException } from '@common/shared/domain/errors/UnauthorizedDomainException';
+import { UnauthorizedDomainException } from '@common/shared/domain/errors/unauthorized-domain.exception';
 
 @Injectable()
 export class SecurityInjectionDetectorMiddleware implements NestMiddleware {
@@ -52,7 +52,7 @@ export class SecurityInjectionDetectorMiddleware implements NestMiddleware {
 
       attackChecks.forEach(({ check, message }) => {
         if (check(partValue)) {
-          throw new UnauthorizedDomainException(message);
+          throw new UnauthorizedDomainException(message, '!todo');
         }
       });
     });

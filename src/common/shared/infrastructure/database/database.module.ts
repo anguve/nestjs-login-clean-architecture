@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import databaseConfig from '../config/database.config';
+import databaseConfig from '@common/shared/infrastructure/config/database.config';
 
 @Module({
   imports: [
@@ -16,4 +16,11 @@ import databaseConfig from '../config/database.config';
   ],
   exports: [TypeOrmModule]
 })
-export class DatabaseModule {}
+export class DatabaseModule {
+  /**
+   * AuthModule is currently empty by design.
+   * This placeholder module is required by the framework and
+   * will be extended with providers, controllers, and exports
+   * in future implementations.
+   */
+}
